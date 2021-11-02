@@ -1,0 +1,8 @@
+borderless_tools-for-GMS1/*
+
+borderless_tools-for-GMS2/*
+!borderless_tools-for-GMS2/assetpackage.yy
+
+borderless_tools-for-GMS2.3+/*
+!borderless_tools-for-GMS2.3+/borderless_tools_23.yyp
+!borderless_tools-for-GMS2.3+/metadata.json
