@@ -52,51 +52,26 @@
           <externalName>borderless_tools_init_raw</externalName>
           <kind>11</kind>
           <help></help>
-          <returnType>1</returnType>
+          <returnType>2</returnType>
           <argCount>1</argCount>
           <args>
             <arg>1</arg>
           </args>
         </function>
         <function>
-          <name>window_close</name>
-          <externalName>window_close</externalName>
-          <kind>1</kind>
-          <help>window_close()</help>
-          <returnType>1</returnType>
-          <argCount>0</argCount>
-          <args/>
+          <name>borderless_tools_syscommand</name>
+          <externalName>borderless_tools_syscommand</externalName>
+          <kind>11</kind>
+          <help></help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>2</arg>
+          </args>
         </function>
         <function>
-          <name>window_minimize</name>
-          <externalName>window_minimize</externalName>
-          <kind>1</kind>
-          <help>window_minimize()</help>
-          <returnType>1</returnType>
-          <argCount>0</argCount>
-          <args/>
-        </function>
-        <function>
-          <name>window_maximize</name>
-          <externalName>window_maximize</externalName>
-          <kind>1</kind>
-          <help>window_maximize()</help>
-          <returnType>1</returnType>
-          <argCount>0</argCount>
-          <args/>
-        </function>
-        <function>
-          <name>window_restore</name>
-          <externalName>window_restore</externalName>
-          <kind>1</kind>
-          <help>window_restore()</help>
-          <returnType>1</returnType>
-          <argCount>0</argCount>
-          <args/>
-        </function>
-        <function>
-          <name>display_measure_all_1</name>
-          <externalName>display_measure_all_1</externalName>
+          <name>borderless_tools_get_monitors_1</name>
+          <externalName>borderless_tools_get_monitors_1</externalName>
           <kind>11</kind>
           <help></help>
           <returnType>2</returnType>
@@ -104,8 +79,8 @@
           <args/>
         </function>
         <function>
-          <name>display_measure_all_2</name>
-          <externalName>display_measure_all_2</externalName>
+          <name>borderless_tools_get_monitors_2</name>
+          <externalName>borderless_tools_get_monitors_2</externalName>
           <kind>11</kind>
           <help></help>
           <returnType>2</returnType>
@@ -115,8 +90,8 @@
           </args>
         </function>
         <function>
-          <name>mouse_get_winapi_double_click_time</name>
-          <externalName>mouse_get_winapi_double_click_time</externalName>
+          <name>borderless_tools_double_click_time</name>
+          <externalName>borderless_tools_double_click_time</externalName>
           <kind>11</kind>
           <help></help>
           <returnType>2</returnType>
@@ -156,10 +131,10 @@
           <args/>
         </function>
         <function>
-          <name>display_measure_all</name>
-          <externalName>display_measure_all</externalName>
+          <name>borderless_tools_get_monitors</name>
+          <externalName>borderless_tools_get_monitors</externalName>
           <kind>2</kind>
-          <help>display_measure_all(?out_list)-&gt;</help>
+          <help>borderless_tools_get_monitors(?out_list)-&gt;</help>
           <returnType>2</returnType>
           <argCount>-1</argCount>
           <args/>

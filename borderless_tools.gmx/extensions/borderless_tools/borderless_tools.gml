@@ -1,12 +1,13 @@
 #define borderless_tools_init
+show_message("")
 borderless_tools_init_raw(window_handle());
 
-#define display_measure_all
+#define borderless_tools_get_monitors
 /// (?out_list)->
 var _list = argument_count > 0 ? argument[0] : undefined;
-var _count = display_measure_all_1();
+var _count = borderless_tools_get_monitors_1();
 var _buf = borderless_tools_prepare_buffer(_count * (4*4 + 4*4 + 4));
-if (!display_measure_all_2(buffer_get_address(_buf))) return array_create(0);
+if (!borderless_tools_get_monitors_2(buffer_get_address(_buf))) return array_create(0);
 var _array;
 var _use_array = _list == undefined;
 if (_use_array) _array = array_create(_count);

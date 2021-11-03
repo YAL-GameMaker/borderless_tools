@@ -1,6 +1,9 @@
 {
     "indentWithTabs": true,
     "linterPrefs": {
-        
-    }
+        "specTypeInst": true,
+        "specTypeInstSubTopLevel": true,
+        "specTypeVar": true
+    },
+    "templateStringScript": "sfmt"
 }

@@ -1,2 +1,1 @@
-frame.update();
 frame.draw();

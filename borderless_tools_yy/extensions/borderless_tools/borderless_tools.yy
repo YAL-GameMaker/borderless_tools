@@ -57,111 +57,66 @@
                     "hidden": true,
                     "kind": 11,
                     "name": "borderless_tools_init_raw",
-                    "returnType": 1
-                },
-                {
-                    "id": "6878bc6d-edb0-b3cf-e51d-d3b686a938b4",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 0,
-                    "args": [
-                        
-                    ],
-                    "externalName": "window_close",
-                    "help": "window_close()",
-                    "hidden": false,
-                    "kind": 1,
-                    "name": "window_close",
-                    "returnType": 1
-                },
-                {
-                    "id": "019fc2da-a5ff-0d26-2fb4-328f89e0745d",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 0,
-                    "args": [
-                        
-                    ],
-                    "externalName": "window_minimize",
-                    "help": "window_minimize()",
-                    "hidden": false,
-                    "kind": 1,
-                    "name": "window_minimize",
-                    "returnType": 1
-                },
-                {
-                    "id": "63be62ff-5bab-c5a3-6645-6813fa083f64",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 0,
-                    "args": [
-                        
-                    ],
-                    "externalName": "window_maximize",
-                    "help": "window_maximize()",
-                    "hidden": false,
-                    "kind": 1,
-                    "name": "window_maximize",
-                    "returnType": 1
-                },
-                {
-                    "id": "c6f6f76e-d25a-f6cc-89f2-8ecd27c45a9c",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 0,
-                    "args": [
-                        
-                    ],
-                    "externalName": "window_restore",
-                    "help": "window_restore()",
-                    "hidden": false,
-                    "kind": 1,
-                    "name": "window_restore",
-                    "returnType": 1
-                },
-                {
-                    "id": "41c8d1b7-e748-adbe-c4bc-1f390978ebe4",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 0,
-                    "args": [
-                        
-                    ],
-                    "externalName": "display_measure_all_1",
-                    "help": "",
-                    "hidden": true,
-                    "kind": 11,
-                    "name": "display_measure_all_1",
                     "returnType": 2
                 },
                 {
-                    "id": "50e926b8-bdc2-c524-9530-e83aabcf3d73",
+                    "id": "87978acc-b3bd-6885-ac86-61d5ef06994a",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": 1,
+                    "args": [
+                        2
+                    ],
+                    "externalName": "borderless_tools_syscommand",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 11,
+                    "name": "borderless_tools_syscommand",
+                    "returnType": 2
+                },
+                {
+                    "id": "20cba871-4a47-ade1-4367-f47e750a3979",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": 0,
+                    "args": [
+                        
+                    ],
+                    "externalName": "borderless_tools_get_monitors_1",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 11,
+                    "name": "borderless_tools_get_monitors_1",
+                    "returnType": 2
+                },
+                {
+                    "id": "e05a70a1-2e6b-2a59-6ea1-1f92eb7c8565",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": 1,
                     "args": [
                         1
                     ],
-                    "externalName": "display_measure_all_2",
+                    "externalName": "borderless_tools_get_monitors_2",
                     "help": "",
                     "hidden": true,
                     "kind": 11,
-                    "name": "display_measure_all_2",
+                    "name": "borderless_tools_get_monitors_2",
                     "returnType": 2
                 },
                 {
-                    "id": "4b5b4600-0806-d349-715b-cb7f4b35bb66",
+                    "id": "1e0e1355-1917-c21c-351f-cb7f40ca5583",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": 0,
                     "args": [
                         
                     ],
-                    "externalName": "mouse_get_winapi_double_click_time",
+                    "externalName": "borderless_tools_double_click_time",
                     "help": "",
                     "hidden": true,
                     "kind": 11,
-                    "name": "mouse_get_winapi_double_click_time",
+                    "name": "borderless_tools_double_click_time",
                     "returnType": 2
                 }
             ],
@@ -203,18 +158,18 @@
                     "returnType": 2
                 },
                 {
-                    "id": "87978acc-808e-5b85-715b-8f3b03f9bb6a",
+                    "id": "17dd9c3b-59f3-7a75-f270-16cc06f11934",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": -1,
                     "args": [
                         
                     ],
-                    "externalName": "display_measure_all",
-                    "help": "display_measure_all(?out_list)->",
+                    "externalName": "borderless_tools_get_monitors",
+                    "help": "borderless_tools_get_monitors(?out_list)->",
                     "hidden": false,
                     "kind": 2,
-                    "name": "display_measure_all",
+                    "name": "borderless_tools_get_monitors",
                     "returnType": 2
                 },
                 {
