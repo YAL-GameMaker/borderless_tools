@@ -229,6 +229,21 @@ function WindowFrame() constructor {
 			drag.update();
 		}
 	}
+	static drawBorder = function(_x, _y, _width, _height) {
+		draw_sprite_stretched(sprBorder, 0, _x, _y, _width, _height);
+	}
+	static drawCaptionRect = function(_x, _y, _width, _height, _buttons_x) {
+		draw_sprite_stretched(sprCaption, window_has_focus(), _x, _y, _width, _height);
+	}
+	static drawCaptionText = function(_x, _y, _width, _height) {
+		var _h = draw_get_halign();
+		var _v = draw_get_valign();
+		draw_set_halign(fa_left);
+		draw_set_valign(fa_middle);
+		draw_text_ext(_x + 4, _y + _height div 2, "", -1, _width);
+		draw_set_halign(_h);
+		draw_set_valign(_v);
+	}
 	static draw = function() {
 		var gw = getWidth();
 		var gh = getHeight();
@@ -238,11 +253,13 @@ function WindowFrame() constructor {
 		//matrix_set(matrix_projection, _mtx_full);
 		var _borderWidth = getBorderWidth();
 		var _titlebarHeight = getTitlebarHeight();
+		var _buttons_x = getButtonsX(gw);
 		
-		if (!isMaximized) draw_sprite_stretched(sprBorder, 0, 0, 0, gw, gh);
-		draw_sprite_stretched(sprCaption, window_has_focus(),
-			_borderWidth, _borderWidth, gw-_borderWidth*2, _titlebarHeight);
-		buttons.draw(getButtonsX(gw), _borderWidth, _titlebarHeight);
+		if (!isMaximized) drawBorder(0, 0, gw, gh);
+		drawCaptionRect(_borderWidth, _borderWidth, gw-_borderWidth*2, _titlebarHeight, _buttons_x);
+		drawCaptionText(_borderWidth, _borderWidth, _buttons_x-_borderWidth, _titlebarHeight);
+		buttons.draw(_buttons_x, _borderWidth, _titlebarHeight);
+		
 		draw_text(5, 30,
 			sfmt("window: %x%", gw, gh)
 			+ sfmt("\nbackbuffer: %x%", browser_width, browser_height)
