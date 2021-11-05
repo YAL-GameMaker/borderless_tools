@@ -17,6 +17,7 @@
   "installdir": "",
   "files": [
     {"filename":"borderless_tools.dll","origname":"extensions\\borderless_tools.dll","init":"","final":"","kind":1,"uncompress":false,"functions":[
+        {"externalName":"borderless_tools_mouse_in_window","kind":11,"help":"","hidden":true,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"borderless_tools_mouse_in_window","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"borderless_tools_init_raw","kind":11,"help":"","hidden":true,"returnType":2,"argCount":1,"args":[
             1,
           ],"resourceVersion":"1.0","name":"borderless_tools_init_raw","tags":[],"resourceType":"GMExtensionFunction",},
@@ -31,8 +32,9 @@
       ],"constants":[
         {"value":"32","hidden":true,"resourceVersion":"1.0","name":"display_measure_all_name_len","tags":[],"resourceType":"GMExtensionConstant",},
       ],"ProxyFiles":[
-        {"TargetMask":6,"resourceVersion":"1.0","name":"borderless_tools_x64.dll","tags":[],"resourceType":"GMProxyFile",},
+        {"name":"borderless_tools_x64.dll","tags":[],"resourceVersion":"1.0","resourceType":"GMProxyFile","TargetMask":6,},
       ],"copyToTargets":9223372036854775807,"order":[
+        {"name":"borderless_tools_mouse_in_window","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_init_raw","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_syscommand","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_get_monitors_1","path":"extensions/borderless_tools/borderless_tools.yy",},
@@ -49,13 +51,21 @@
             2,
             2,
           ],"resourceVersion":"1.0","name":"borderless_tools_buffer_read_chars","tags":[],"resourceType":"GMExtensionFunction",},
-      ],"constants":[],"ProxyFiles":[],"copyToTargets":9223372036854775807,"order":[
+      ],"constants":[
+        
+      ],"ProxyFiles":[],"copyToTargets":9223372036854775807,"order":[
         {"name":"borderless_tools_init","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_get_monitors","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_prepare_buffer","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_buffer_read_chars","path":"extensions/borderless_tools/borderless_tools.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
-    {"filename":"autogen.gml","origname":"extensions\\autogen.gml","init":"","final":"","kind":2,"uncompress":false,"functions":[],"constants":[],"ProxyFiles":[],"copyToTargets":-1,"order":[],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
+    {"filename":"autogen.gml","origname":"extensions\\autogen.gml","init":"","final":"","kind":2,"uncompress":false,"functions":[
+        
+      ],"constants":[
+        
+      ],"ProxyFiles":[],"copyToTargets":-1,"order":[
+        
+      ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
   "tvosclassname": "",

@@ -48,6 +48,15 @@
       <ProxyFiles/>
       <functions>
         <function>
+          <name>borderless_tools_mouse_in_window</name>
+          <externalName>borderless_tools_mouse_in_window</externalName>
+          <kind>11</kind>
+          <help></help>
+          <returnType>2</returnType>
+          <argCount>0</argCount>
+          <args/>
+        </function>
+        <function>
           <name>borderless_tools_init_raw</name>
           <externalName>borderless_tools_init_raw</externalName>
           <kind>11</kind>

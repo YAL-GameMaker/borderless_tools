@@ -81,7 +81,7 @@ function WindowFrameButtons(_frame) constructor {
 		}
 	}
 	static update = function(_x, _y, _height, _mx, _my) {
-		var _over_row = (_my >= _y && _my < _y + _height);
+		var _over_row = (_my >= _y && _my < _y + _height) && borderless_tools_mouse_in_window();
 		if (waitForMovement.enabled) {
 			if (_mx != waitForMovement.x || _my != waitForMovement.y) {
 				waitForMovement.enabled = false;

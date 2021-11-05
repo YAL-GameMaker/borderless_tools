@@ -1,5 +1,4 @@
 #define borderless_tools_init
-show_message("")
 borderless_tools_init_raw(window_handle());
 
 #define borderless_tools_get_monitors

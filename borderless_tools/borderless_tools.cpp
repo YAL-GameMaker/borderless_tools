@@ -35,9 +35,46 @@ public:
 };
 
 static HWND hwnd;
+static TRACKMOUSEEVENT hwnd_tme;
+static bool hwnd_tme_bound = false;
+static bool mouse_in_window = false;
+dllx double borderless_tools_mouse_in_window() {
+	return mouse_in_window;
+}
+
+WNDPROC window_command_proc_base = nullptr;
+LRESULT window_command_proc_hook(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	//printf("msg=%d\n", msg); fflush(stdout);
+	switch (msg) {
+		case WM_MOUSEMOVE:
+			if (!hwnd_tme_bound) {
+				//trace("Enter");
+				hwnd_tme_bound = true;
+				mouse_in_window = true;
+				TrackMouseEvent(&hwnd_tme);
+			}
+			break;
+		case WM_MOUSELEAVE:
+			//trace("Leave");
+			hwnd_tme_bound = false;
+			mouse_in_window = false;
+			break;
+	}
+	return CallWindowProc(window_command_proc_base, hwnd, msg, wParam, lParam);
+}
 
 dllx void borderless_tools_init_raw(void* _hwnd) {
+	if (hwnd) return;
 	hwnd = (HWND)_hwnd;
+	hwnd_tme_bound = true;
+	mouse_in_window = true;
+	hwnd_tme = {};
+	hwnd_tme.cbSize = sizeof(hwnd_tme);
+	hwnd_tme.dwFlags = TME_LEAVE;
+	hwnd_tme.hwndTrack = hwnd;
+	hwnd_tme.dwHoverTime = 1;
+	TrackMouseEvent(&hwnd_tme);
+	window_command_proc_base = (WNDPROC)SetWindowLongPtr(hwnd, GWL_WNDPROC, (LONG_PTR)window_command_proc_hook);
 }
 
 dllx void borderless_tools_syscommand(double _sc) {
