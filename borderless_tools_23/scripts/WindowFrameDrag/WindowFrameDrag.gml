@@ -20,8 +20,6 @@ function WindowFrameDrag(_frame) constructor {
 		flags = WindowFrameDragFlags.None;
 	}
 	static setRect = function(_x, _y, _width, _height) {
-		_width = (_width div 2) * 2;
-		_height = (_height div 2) * 2;
 		window_set_rectangle(_x, _y, _width, _height)
 	}
 	static update = function() {

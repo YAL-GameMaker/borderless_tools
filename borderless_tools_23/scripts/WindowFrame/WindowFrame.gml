@@ -247,10 +247,7 @@ function WindowFrame() constructor {
 	static draw = function() {
 		var gw = getWidth();
 		var gh = getHeight();
-		display_set_gui_maximise(browser_width/gw, browser_height/gh, 0, 0)
-		//var _mtx_orig = matrix_get(matrix_projection);
-		//var _mtx_full = matrix_build_projection_ortho(window_get_width(), -window_get_height(), 0, 16000);
-		//matrix_set(matrix_projection, _mtx_full);
+		display_set_gui_maximise_base(browser_width/gw, browser_height/gh, (gw%2)/-2, (gh%2)/-2);
 		var _borderWidth = getBorderWidth();
 		var _titlebarHeight = getTitlebarHeight();
 		var _buttons_x = getButtonsX(gw);
@@ -265,8 +262,37 @@ function WindowFrame() constructor {
 			+ sfmt("\nbackbuffer: %x%", browser_width, browser_height)
 			+ sfmt("\nflags: %", drag.flags)
 		)
-		//matrix_set(matrix_projection, _mtx_orig);
-		//display_set_gui_maximise()
-		display_set_gui_size(480, 270);
+		
+		var _args = global.__display_gui_size;
+		switch (_args[0]) {
+			case -1: display_set_gui_size_base(_args[1], _args[2]); break;
+			case 0: display_set_gui_maximise_base(); break;
+			case 1: display_set_gui_maximise_base(_args[1]); break;
+			case 2: display_set_gui_maximise_base(_args[1], _args[2]); break;
+			case 3: display_set_gui_maximise_base(_args[1], _args[2], _args[3]); break;
+			case 4: display_set_gui_maximise_base(_args[1], _args[2], _args[3], _args[4]); break;
+		}
 	}
+}
+
+global.__display_gui_size = [0, 0, 0, 0, 0];
+#macro display_set_gui_size_base display_set_gui_size
+#macro display_set_gui_size display_set_gui_size_hook
+function display_set_gui_size_hook(_width, _height) {
+	display_set_gui_size_base(_width, _height);
+	global.__display_gui_size[@0] = -1;
+	global.__display_gui_size[@1] = _width;
+	global.__display_gui_size[@2] = _height;
+	global.__display_gui_size[@3] = 0;
+	global.__display_gui_size[@4] = 0;
+}
+#macro display_set_gui_maximize_base display_set_gui_maximize
+#macro display_set_gui_maximise_base display_set_gui_maximise
+#macro display_set_gui_maximize display_set_gui_maximize_hook
+#macro display_set_gui_maximise display_set_gui_maximize_hook
+function display_set_gui_maximize_hook() {
+	global.__display_gui_size[@0] = argument_count;
+	var i = 0;
+	for (; i < argument_count; i++) global.__display_gui_size[@i + 1] = argument[i];
+	for (; i < 4; i++) global.__display_gui_size[@i + 1] = 0;
 }

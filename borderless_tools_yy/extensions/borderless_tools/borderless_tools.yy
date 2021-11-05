@@ -45,6 +45,21 @@
             "final": "",
             "functions": [
                 {
+                    "id": "3c2c3177-808e-5b3e-9fb5-da6e570611c1",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": 0,
+                    "args": [
+                        
+                    ],
+                    "externalName": "borderless_tools_mouse_in_window",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 11,
+                    "name": "borderless_tools_mouse_in_window",
+                    "returnType": 2
+                },
+                {
                     "id": "61dab98e-9c21-2562-7f89-330616fe7d1f",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
