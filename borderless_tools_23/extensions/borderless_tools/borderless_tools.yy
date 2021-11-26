@@ -18,6 +18,9 @@
   "files": [
     {"filename":"borderless_tools.dll","origname":"extensions\\borderless_tools.dll","init":"","final":"","kind":1,"uncompress":false,"functions":[
         {"externalName":"borderless_tools_mouse_in_window","kind":11,"help":"","hidden":true,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"borderless_tools_mouse_in_window","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"borderless_tools_set_shadow","kind":11,"help":"","hidden":true,"returnType":2,"argCount":1,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"borderless_tools_set_shadow","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"borderless_tools_init_raw","kind":11,"help":"","hidden":true,"returnType":2,"argCount":1,"args":[
             1,
           ],"resourceVersion":"1.0","name":"borderless_tools_init_raw","tags":[],"resourceType":"GMExtensionFunction",},
@@ -32,9 +35,10 @@
       ],"constants":[
         {"value":"32","hidden":true,"resourceVersion":"1.0","name":"display_measure_all_name_len","tags":[],"resourceType":"GMExtensionConstant",},
       ],"ProxyFiles":[
-        {"name":"borderless_tools_x64.dll","tags":[],"resourceVersion":"1.0","resourceType":"GMProxyFile","TargetMask":6,},
+        {"TargetMask":6,"resourceVersion":"1.0","name":"borderless_tools_x64.dll","tags":[],"resourceType":"GMProxyFile",},
       ],"copyToTargets":9223372036854775807,"order":[
         {"name":"borderless_tools_mouse_in_window","path":"extensions/borderless_tools/borderless_tools.yy",},
+        {"name":"borderless_tools_set_shadow","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_init_raw","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_syscommand","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_get_monitors_1","path":"extensions/borderless_tools/borderless_tools.yy",},
@@ -43,29 +47,16 @@
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
     {"filename":"borderless_tools.gml","origname":"extensions\\gml.gml","init":"borderless_tools_init","final":"","kind":2,"uncompress":false,"functions":[
         {"externalName":"borderless_tools_init","kind":11,"help":"","hidden":true,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"borderless_tools_init","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"borderless_tools_get_monitors","kind":2,"help":"borderless_tools_get_monitors(?out_list)->","hidden":false,"returnType":2,"argCount":-1,"args":[],"resourceVersion":"1.0","name":"borderless_tools_get_monitors","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"borderless_tools_prepare_buffer","kind":2,"help":"borderless_tools_prepare_buffer(size:int)->buffer~","hidden":false,"returnType":2,"argCount":1,"args":[
-            2,
-          ],"resourceVersion":"1.0","name":"borderless_tools_prepare_buffer","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"borderless_tools_buffer_read_chars","kind":2,"help":"borderless_tools_buffer_read_chars(buffer:buffer, len:int)->string~","hidden":false,"returnType":2,"argCount":2,"args":[
-            2,
-            2,
-          ],"resourceVersion":"1.0","name":"borderless_tools_buffer_read_chars","tags":[],"resourceType":"GMExtensionFunction",},
-      ],"constants":[
-        
-      ],"ProxyFiles":[],"copyToTargets":9223372036854775807,"order":[
+        {"externalName":"borderless_tools_get_monitors","kind":11,"help":"","hidden":true,"returnType":2,"argCount":-1,"args":[],"resourceVersion":"1.0","name":"borderless_tools_get_monitors","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"borderless_tools_prepare_buffer","kind":11,"help":"","hidden":true,"returnType":2,"argCount":1,"args":[],"resourceVersion":"1.0","name":"borderless_tools_prepare_buffer","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"borderless_tools_buffer_read_chars","kind":11,"help":"","hidden":true,"returnType":2,"argCount":2,"args":[],"resourceVersion":"1.0","name":"borderless_tools_buffer_read_chars","tags":[],"resourceType":"GMExtensionFunction",},
+      ],"constants":[],"ProxyFiles":[],"copyToTargets":9223372036854775807,"order":[
         {"name":"borderless_tools_init","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_get_monitors","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_prepare_buffer","path":"extensions/borderless_tools/borderless_tools.yy",},
         {"name":"borderless_tools_buffer_read_chars","path":"extensions/borderless_tools/borderless_tools.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
-    {"filename":"autogen.gml","origname":"extensions\\autogen.gml","init":"","final":"","kind":2,"uncompress":false,"functions":[
-        
-      ],"constants":[
-        
-      ],"ProxyFiles":[],"copyToTargets":-1,"order":[
-        
-      ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
+    {"filename":"autogen.gml","origname":"extensions\\autogen.gml","init":"","final":"","kind":2,"uncompress":false,"functions":[],"constants":[],"ProxyFiles":[],"copyToTargets":-1,"order":[],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
   "tvosclassname": "",

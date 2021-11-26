@@ -6,7 +6,7 @@
     "path": "folders/Scripts/WindowFrame.yy",
   },
   "resourceVersion": "1.0",
-  "name": "WindowFrameDrag",
+  "name": "WindowFrameHooks",
   "tags": [],
   "resourceType": "GMScript",
 }

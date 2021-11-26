@@ -145,7 +145,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>user32.lib;kernel32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;kernel32.lib;Dwmapi.lib</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <NoEntryPoint>false</NoEntryPoint>
       <EntryPointSymbol>DllMain</EntryPointSymbol>
@@ -182,7 +182,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>user32.lib;kernel32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;kernel32.lib;Dwmapi.lib</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <NoEntryPoint>false</NoEntryPoint>
       <EntryPointSymbol>DllMain</EntryPointSymbol>

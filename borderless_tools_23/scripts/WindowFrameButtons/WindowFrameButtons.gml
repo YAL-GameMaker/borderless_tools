@@ -39,14 +39,15 @@ function WindowFrameButton(_sprite, _subimg, _onClick) constructor {
 			} else if (fade > 0) {
 				fade = max(fade - dt / frame.buttons.fadeTime, 0);
 			}
-			_alpha = frame.alpha * fade * 0.3;//ease_inout_expo(fade, 0, 1, 1);
+			_alpha = fade * 0.3;//ease_inout_expo(fade, 0, 1, 1);
 		}
-		draw_sprite_stretched_ext(frame.sprPixel, 0, _x, _y, getWidth(), _height, c_white, _alpha);
+		draw_sprite_stretched_ext(frame.sprPixel, 0, _x, _y, getWidth(), _height, frame.blend, frame.alpha * _alpha);
 	}
 	static drawIcon = function(_x, _y, _width, _height) {
-		draw_sprite(sprite, subimg,
+		draw_sprite_ext(sprite, subimg,
 			_x + (_width - sprite_get_width(sprite)) div 2,
-			_y + (_height - sprite_get_height(sprite)) div 2
+			_y + (_height - sprite_get_height(sprite)) div 2,
+			1, 1, 0, frame.blend, frame.alpha
 		);
 	}
 }
@@ -89,7 +90,7 @@ function WindowFrameButtons(_frame) constructor {
 		}
 		var _pressed = mouse_check_button_pressed(mb_left);
 		var _released = mouse_check_button_released(mb_left);
-		var _disable = frame.drag.flags != WindowFrameDragFlags.None;
+		var _disable = frame.drag.flags != WindowFrameDragFlags.None || !frame.input;
 		var n = array_length(buttons);
 		for (var i = 0; i < n; i++) {
 			var _button = buttons[i];
@@ -123,4 +124,43 @@ function WindowFrameButtons(_frame) constructor {
 			_x += _width + _button.marginRight;
 		}
 	}
+}
+
+function WindowFrameButtons_addDefaultButtons(_buttons/*:WindowFrameButtons*/) {
+	var _frame = _buttons.frame;
+	_buttons.minimize = buttons.add(new WindowFrameButton(_frame.sprButtons, 0, method(_frame, function(_frame) {
+		buttons.reset();
+		delay(function() {
+			buttons.waitForMovement.enabled = true;
+			buttons.waitForMovement.x = window_mouse_get_x();
+			buttons.waitForMovement.y = window_mouse_get_y();
+			borderless_tools_syscommand(0xF020);
+		}, 1)
+	})));
+	_buttons.maxrest = buttons.add(new WindowFrameButton(sprButtons, 1, method(_frame, function(_frame) {
+		if (isMaximized) restore(); else maximize();
+		buttons.reset();
+	})));
+	_buttons.close = buttons.add(new WindowFrameButton(sprButtons, 3, function(_frame) {
+		game_end();
+	}));
+	_buttons.close.drawUnderlay = method(buttons.close, function(_x, _y, _width, _height) {
+		var _alpha;
+		if (pressed) {
+			_alpha = 0.7;
+			fade = 1;
+		} else {
+			var dt = delta_time / 1000000;
+			if (hover) {
+				if (fade < 1) {
+					fade = max(fade, 0.5);
+					fade = min(fade + dt / frame.buttons.fadeTime, 1);
+				}
+			} else if (fade > 0) {
+				fade = max(fade - dt / frame.buttons.fadeTime, 0);
+			}
+			_alpha = frame.alpha * fade;//ease_inout_expo(fade, 0, 1, 1);
+		}
+		draw_sprite_stretched_ext(frame.sprPixel, 0, _x, _y, getWidth(), _height, /*#*/0x2311E8, _alpha);
+	});
 }

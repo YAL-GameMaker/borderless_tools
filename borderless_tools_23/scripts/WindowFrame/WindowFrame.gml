@@ -4,7 +4,18 @@ function WindowFrame() constructor {
 	sprButtons = spr_window_buttons;
 	sprPixel = spr_window_pixel;
 	
+	debug = false;
+	/// @param ...concat
+	static mylog = function() {
+		if (!debug) exit;
+		var s = "[WindowFrame] ";
+		for (var i = 0; i < argument_count; i++) s += string(argument[i]);
+		show_debug_message(s);
+	}
+	
+	blend = c_white;
 	alpha = 1;
+	input = true;
 	doubleClickTime = borderless_tools_double_click_time(); // in ms!
 	
 	titlebarHeight = sprite_get_height(sprCaption);
@@ -13,47 +24,15 @@ function WindowFrame() constructor {
 	resizePadding = 6;
 	borderWidth = 2;
 	drag = new WindowFrameDrag(self);
+	hotkeys = new WindowFrameHotkeys(self);
+	cover = new WindowFrameCover(self);
 	defaultCursor = cr_arrow;
 	isMaximized = false;
+	isFullscreen = false; // borderless fullscreen, that is
 	restoreRect = [window_get_x(), window_get_y(), window_get_width(), window_get_height()];
-	postResizeTimer = 0;
 	
 	buttons = new WindowFrameButtons(self);
-	buttons.minimize = buttons.add(new WindowFrameButton(sprButtons, 0, function(_frame) {
-		buttons.reset();
-		delay(function() {
-			buttons.waitForMovement.enabled = true;
-			buttons.waitForMovement.x = window_mouse_get_x();
-			buttons.waitForMovement.y = window_mouse_get_y();
-			borderless_tools_syscommand(0xF020);
-		}, 1)
-	}));
-	buttons.maxrest = buttons.add(new WindowFrameButton(sprButtons, 1, function(_frame) {
-		if (isMaximized) restore(); else maximize();
-		buttons.reset();
-	}));
-	buttons.close = buttons.add(new WindowFrameButton(sprButtons, 3, function(_frame) {
-		game_end();
-	}));
-	buttons.close.drawUnderlay = method(buttons.close, function(_x, _y, _width, _height) {
-		var _alpha;
-		if (pressed) {
-			_alpha = 0.7;
-			fade = 1;
-		} else {
-			var dt = delta_time / 1000000;
-			if (hover) {
-				if (fade < 1) {
-					fade = max(fade, 0.5);
-					fade = min(fade + dt / frame.buttons.fadeTime, 1);
-				}
-			} else if (fade > 0) {
-				fade = max(fade - dt / frame.buttons.fadeTime, 0);
-			}
-			_alpha = frame.alpha * fade;//ease_inout_expo(fade, 0, 1, 1);
-		}
-		draw_sprite_stretched_ext(frame.sprPixel, 0, _x, _y, getWidth(), _height, /*#*/0x2311E8, _alpha);
-	});
+	WindowFrameButtons_addDefaultButtons(buttons);
 	
 	frame_index = 0;
 	delayQueue = ds_queue_create();
@@ -64,8 +43,13 @@ function WindowFrame() constructor {
 		frame_index += 1;
 		while (!ds_queue_empty(delayQueue)) {
 			var _head = ds_queue_head(delayQueue);
-			if (_head[1] < frame_index) break;
+			if (_head[1] > frame_index) break;
 			ds_queue_dequeue(delayQueue);
+			if 0 {
+				var fn = _head[0];
+				var _script = is_method(fn) ? method_get_index(fn) : fn;
+				trace(_head[1], frame_index, script_get_name(_script), _head);
+			}
 			_head[0](_head[2], _head[3], _head[4], _head[5]);
 		}
 	}
@@ -74,7 +58,7 @@ function WindowFrame() constructor {
 		return (isMaximized ? _width : _width - borderWidth) - buttons.getWidth();
 	}
 	
-	static getActiveMonitor = function() {
+	static getActiveMonitor = function()/*->tuple<array<int>,array<int>,int>*/ {
 		static _list = ds_list_create();
 		var _count = borderless_tools_get_monitors(_list);
 		var _cx = window_get_x() + window_get_width() div 2;
@@ -97,23 +81,87 @@ function WindowFrame() constructor {
 		}
 		return _item;
 	}
+	
 	static maximize = function() {
-		if (isMaximized) exit;
+		if (isMaximized || isFullscreen) exit;
 		isMaximized = true;
-		var _item = getActiveMonitor();
+		storeRect();
+		maximize_1();
+	}
+	static maximize_1 = function() {
+		var _work = getActiveMonitor()[1];
+		if (debug) mylog("maximize: ", _work);
+		window_set_rectangle(_work[0], _work[1], _work[2], _work[3]);
+		borderless_tools_set_shadow(false);
+	}
+	static storeRect = function() {
 		restoreRect[@0] = window_get_x();
 		restoreRect[@1] = window_get_y();
 		restoreRect[@2] = window_get_width();
 		restoreRect[@3] = window_get_height();
-		var _work = _item[1];
-		window_set_rectangle(_work[0], _work[1], _work[2], _work[3]);
+		if (debug) mylog("storeRect: ", restoreRect);
 	}
-	static restore = function() {
-		if (!isMaximized) exit;
+	static restore = function(_force = false) {
+		if (window_get_fullscreen()) {
+			window_set_fullscreen(false);
+			delay(restore, 1);
+			exit;
+		}
+		if (!_force && !isMaximized && !isFullscreen) exit;
 		isMaximized = false;
+		isFullscreen = false;
 		var _rect = restoreRect;
+		if (debug) mylog("restore: ", _rect);
 		window_set_rectangle(_rect[0], _rect[1], _rect[2], _rect[3]);
+		borderless_tools_set_shadow(true);
 	}
+	static setFullscreen = function(_mode, _wasFullscreen = false) {
+		if (debug) mylog("setFullscreen(mode:", _mode, ", wasfs:", _wasFullscreen, ")");
+		if (_mode == 1 || _mode == 2) {
+			buttons.reset();
+			drag.stop();
+		}
+		switch (_mode) {
+			case 1: // true fullscreen
+				if (window_get_fullscreen()) exit;
+				if (isFullscreen) {
+					restore();
+					delay(setFullscreen, 1, 1);
+					exit;
+				} else storeRect();
+				window_set_fullscreen(true);
+				break;
+			case 2: // fullscreen window
+				if (window_get_fullscreen()) {
+					window_set_fullscreen(false);
+					delay(setFullscreen, 10, 2, true);
+					exit;
+				}
+				if (isFullscreen) break;
+				isFullscreen = true;
+				if (!isMaximized && !_wasFullscreen) storeRect();
+				var _rect = getActiveMonitor()[0];
+				window_set_rectangle(_rect[0], _rect[1], _rect[2], _rect[3]);
+				borderless_tools_set_shadow(false);
+				break;
+			default: // windowed
+				if (window_get_fullscreen() && isFullscreen) {
+					window_set_fullscreen(false);
+					delay(setFullscreen, 1, 0);
+					exit;
+				}
+				if (window_get_fullscreen()) {
+					window_set_fullscreen(false);
+				} else {
+					if (isMaximized) {
+						isFullscreen = false;
+						maximize_1();
+					} else restore();
+				}
+				break;
+		}
+	}
+	
 	static setCursor = function(_cursor) {
 		if (window_get_cursor() != _cursor) {
 			window_set_cursor(_cursor);
@@ -128,21 +176,11 @@ function WindowFrame() constructor {
 	static getWidth = function() { return window_get_width() }
 	static getHeight = function() { return window_get_height() }
 	
-	display_set_gui_maximise(1, 1, 0, 0);
-	static aspectUpdate = function() {
-		var _aw = surface_get_width(application_surface);
-		var _ah = surface_get_height(application_surface);
-		var _ww = window_get_width();
-		var _wh = window_get_height();
-		//display_set_gui_size(window_get_width(), window_get_height());
-		//display_set_gui_maximize(1, 1, 0, 0);
-		//var pos = application_get_position();
-		//display_set_gui_maximise(1, 1, 0, 0);
-	}
 	static update = function() {
-		aspectUpdate();
 		delayUpdate();
-		buttons.maxrest.subimg = isMaximized ? 2 : 1;
+		cover.ensure();
+		if (window_get_fullscreen() || isFullscreen) exit;
+		hotkeys.update();
 		var mx = window_mouse_get_x();
 		var my = window_mouse_get_y();
 		var gw = getWidth();
@@ -181,30 +219,17 @@ function WindowFrame() constructor {
 		
 		if (drag.flags == 0) {
 			var _cursor/*:window_cursor*/ = defaultCursor;
-			switch (_flags) {
+			if (input) switch (_flags) {
 				case 1: case 4: _cursor = cr_size_we; break;
 				case 2: case 8: _cursor = cr_size_ns; break;
 				case 3: case 12: _cursor = cr_size_nwse; break;
 				case 6: case 9: _cursor = cr_size_nesw; break;
 			}
 			setCursor(_cursor);
-			
-			if (postResizeTimer > 0) {
-				postResizeTimer -= 1;
-				if (postResizeTimer <= 0) {
-					var _width = window_get_width();
-					var _height = window_get_height();
-					window_set_size(_width - 10, _height - 10);
-					delay(function(_width, _height) {
-						window_set_size(_width, _height);
-					}, 1, _width, _height)
-					trace("force!");
-				}
-			}
 		}
 		
 		buttons.update(_buttons_x, _borderWidth, _titleHeight, mx, my);
-		if (mouse_check_button_pressed(mb_left)) {
+		if (input && mouse_check_button_pressed(mb_left)) {
 			if (_titleHit) {
 				var _now = current_time;
 				if (_now < lastTitleClickAt + doubleClickTime) {
@@ -223,17 +248,19 @@ function WindowFrame() constructor {
 				drag.start(_flags);
 			}
 		}
-		if (mouse_check_button_released(mb_left)) {
+		if (!input) {
+			if (drag.flags != 0) drag.stop();
+		} else if (mouse_check_button_released(mb_left)) {
 			drag.stop();
 		} else {
 			drag.update();
 		}
 	}
 	static drawBorder = function(_x, _y, _width, _height) {
-		draw_sprite_stretched(sprBorder, 0, _x, _y, _width, _height);
+		draw_sprite_stretched_ext(sprBorder, 0, _x, _y, _width, _height, blend, alpha);
 	}
 	static drawCaptionRect = function(_x, _y, _width, _height, _buttons_x) {
-		draw_sprite_stretched(sprCaption, window_has_focus(), _x, _y, _width, _height);
+		draw_sprite_stretched_ext(sprCaption, window_has_focus(), _x, _y, _width, _height, blend, alpha);
 	}
 	static drawCaptionText = function(_x, _y, _width, _height) {
 		var _h = draw_get_halign();
@@ -245,9 +272,12 @@ function WindowFrame() constructor {
 		draw_set_valign(_v);
 	}
 	static draw = function() {
+		if (window_get_fullscreen() || isFullscreen) exit;
+		buttons.maxrest.subimg = isMaximized ? 2 : 1;
+		
 		var gw = getWidth();
 		var gh = getHeight();
-		display_set_gui_maximise_base(browser_width/gw, browser_height/gh, (gw%2)/-2, (gh%2)/-2);
+		__display_set_gui_maximise_base(browser_width/gw, browser_height/gh, (gw%2)/-2, (gh%2)/-2);
 		var _borderWidth = getBorderWidth();
 		var _titlebarHeight = getTitlebarHeight();
 		var _buttons_x = getButtonsX(gw);
@@ -257,42 +287,7 @@ function WindowFrame() constructor {
 		drawCaptionText(_borderWidth, _borderWidth, _buttons_x-_borderWidth, _titlebarHeight);
 		buttons.draw(_buttons_x, _borderWidth, _titlebarHeight);
 		
-		draw_text(5, 30,
-			sfmt("window: %x%", gw, gh)
-			+ sfmt("\nbackbuffer: %x%", browser_width, browser_height)
-			+ sfmt("\nflags: %", drag.flags)
-		)
-		
-		var _args = global.__display_gui_size;
-		switch (_args[0]) {
-			case -1: display_set_gui_size_base(_args[1], _args[2]); break;
-			case 0: display_set_gui_maximise_base(); break;
-			case 1: display_set_gui_maximise_base(_args[1]); break;
-			case 2: display_set_gui_maximise_base(_args[1], _args[2]); break;
-			case 3: display_set_gui_maximise_base(_args[1], _args[2], _args[3]); break;
-			case 4: display_set_gui_maximise_base(_args[1], _args[2], _args[3], _args[4]); break;
-		}
+		__display_gui_restore();
 	}
 }
 
-global.__display_gui_size = [0, 0, 0, 0, 0];
-#macro display_set_gui_size_base display_set_gui_size
-#macro display_set_gui_size display_set_gui_size_hook
-function display_set_gui_size_hook(_width, _height) {
-	display_set_gui_size_base(_width, _height);
-	global.__display_gui_size[@0] = -1;
-	global.__display_gui_size[@1] = _width;
-	global.__display_gui_size[@2] = _height;
-	global.__display_gui_size[@3] = 0;
-	global.__display_gui_size[@4] = 0;
-}
-#macro display_set_gui_maximize_base display_set_gui_maximize
-#macro display_set_gui_maximise_base display_set_gui_maximise
-#macro display_set_gui_maximize display_set_gui_maximize_hook
-#macro display_set_gui_maximise display_set_gui_maximize_hook
-function display_set_gui_maximize_hook() {
-	global.__display_gui_size[@0] = argument_count;
-	var i = 0;
-	for (; i < argument_count; i++) global.__display_gui_size[@i + 1] = argument[i];
-	for (; i < 4; i++) global.__display_gui_size[@i + 1] = 0;
-}

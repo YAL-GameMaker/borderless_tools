@@ -2,7 +2,6 @@
 borderless_tools_init_raw(window_handle());
 
 #define borderless_tools_get_monitors
-/// (?out_list)->
 var _list = argument_count > 0 ? argument[0] : undefined;
 var _count = borderless_tools_get_monitors_1();
 var _buf = borderless_tools_prepare_buffer(_count * (4*4 + 4*4 + 4));
@@ -45,7 +44,6 @@ for (var _ind = 0; _ind < _count; _ind++) {
 return _use_array ? _array : _count;
 
 #define borderless_tools_prepare_buffer
-/// (size:int)->buffer~
 var _size = argument0;
 gml_pragma("global", "global.__borderless_tools_buffer = undefined");
 var _buf = global.__borderless_tools_buffer;
@@ -59,7 +57,6 @@ buffer_seek(_buf, buffer_seek_start, 0);
 return _buf;
 
 #define borderless_tools_buffer_read_chars
-/// (buffer:buffer, len:int)->string~
 var _buf = argument0, _len = argument1;
 gml_pragma("global", "global.__ggpo_string_buffer = undefined");
 var _tmp = global.__ggpo_string_buffer;

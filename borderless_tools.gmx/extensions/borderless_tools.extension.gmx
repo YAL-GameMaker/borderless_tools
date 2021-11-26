@@ -57,6 +57,17 @@
           <args/>
         </function>
         <function>
+          <name>borderless_tools_set_shadow</name>
+          <externalName>borderless_tools_set_shadow</externalName>
+          <kind>11</kind>
+          <help></help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>2</arg>
+          </args>
+        </function>
+        <function>
           <name>borderless_tools_init_raw</name>
           <externalName>borderless_tools_init_raw</externalName>
           <kind>11</kind>
@@ -142,8 +153,8 @@
         <function>
           <name>borderless_tools_get_monitors</name>
           <externalName>borderless_tools_get_monitors</externalName>
-          <kind>2</kind>
-          <help>borderless_tools_get_monitors(?out_list)-&gt;</help>
+          <kind>11</kind>
+          <help></help>
           <returnType>2</returnType>
           <argCount>-1</argCount>
           <args/>
@@ -151,25 +162,20 @@
         <function>
           <name>borderless_tools_prepare_buffer</name>
           <externalName>borderless_tools_prepare_buffer</externalName>
-          <kind>2</kind>
-          <help>borderless_tools_prepare_buffer(size:int)-&gt;buffer~</help>
+          <kind>11</kind>
+          <help></help>
           <returnType>2</returnType>
           <argCount>1</argCount>
-          <args>
-            <arg>2</arg>
-          </args>
+          <args/>
         </function>
         <function>
           <name>borderless_tools_buffer_read_chars</name>
           <externalName>borderless_tools_buffer_read_chars</externalName>
-          <kind>2</kind>
-          <help>borderless_tools_buffer_read_chars(buffer:buffer, len:int)-&gt;string~</help>
+          <kind>11</kind>
+          <help></help>
           <returnType>2</returnType>
           <argCount>2</argCount>
-          <args>
-            <arg>2</arg>
-            <arg>2</arg>
-          </args>
+          <args/>
         </function>
       </functions>
       <constants/>

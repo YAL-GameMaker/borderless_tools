@@ -1,6 +1,7 @@
 /// @author YellowAfterlife
 
 #include "stdafx.h"
+#include <dwmapi.h>
 
 template<class T>
 class gml_ovector {
@@ -42,10 +43,29 @@ dllx double borderless_tools_mouse_in_window() {
 	return mouse_in_window;
 }
 
+static bool has_shadow;
+dllx void borderless_tools_set_shadow(double _enable) {
+	bool enable = _enable > 0.5;
+	has_shadow = enable;
+	auto pad = enable ? 1 : 0;
+	MARGINS m{ pad, pad, pad, pad };
+	DwmExtendFrameIntoClientArea(hwnd, &m);
+	SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) | WS_CAPTION);
+	SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED);
+	//trace("shadow: %d", enable);
+}
+
 WNDPROC window_command_proc_base = nullptr;
 LRESULT window_command_proc_hook(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	//printf("msg=%d\n", msg); fflush(stdout);
 	switch (msg) {
+		case WM_NCCALCSIZE:
+			//trace("NCCALCSIZE(wp=%d,lp=%d,shadow=%d)", wParam, lParam, has_shadow);
+			if (has_shadow && wParam == TRUE) {
+				SetWindowLong(hwnd, DWLP_MSGRESULT, 0);
+				return TRUE;
+			}
+			return FALSE;
 		case WM_MOUSEMOVE:
 			if (!hwnd_tme_bound) {
 				//trace("Enter");
@@ -74,7 +94,9 @@ dllx void borderless_tools_init_raw(void* _hwnd) {
 	hwnd_tme.hwndTrack = hwnd;
 	hwnd_tme.dwHoverTime = 1;
 	TrackMouseEvent(&hwnd_tme);
-	window_command_proc_base = (WNDPROC)SetWindowLongPtr(hwnd, GWL_WNDPROC, (LONG_PTR)window_command_proc_hook);
+	window_command_proc_base = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)window_command_proc_hook);
+	SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) | WS_CAPTION);
+	borderless_tools_set_shadow(true);
 }
 
 dllx void borderless_tools_syscommand(double _sc) {
@@ -89,6 +111,12 @@ struct borderless_tools_get_monitors_t {
 	int flags;
 };
 static gml_ovector<borderless_tools_get_monitors_t> borderless_tools_get_monitors_acc;
+
+static void init() {
+	hwnd = 0;
+	has_shadow = false;
+	borderless_tools_get_monitors_acc.init();
+}
 
 BOOL CALLBACK display_measure_all_cb(HMONITOR m, HDC hdc, LPRECT rect, LPARAM p) {
 	MONITORINFO inf;
@@ -127,8 +155,7 @@ dllx double borderless_tools_double_click_time() {
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 	switch (fdwReason) {
 		case DLL_PROCESS_ATTACH:
-			hwnd = 0;
-			borderless_tools_get_monitors_acc.init();
+			init();
 			break;
 		case DLL_PROCESS_DETACH:
 			borderless_tools_get_monitors_acc.cleanup();

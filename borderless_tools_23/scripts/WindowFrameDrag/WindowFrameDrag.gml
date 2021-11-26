@@ -1,3 +1,4 @@
+// Handles moving and dragging the frame
 function WindowFrameDrag(_frame) constructor {
 	frame = _frame; /// @is {WindowFrame}
 	flags = WindowFrameDragFlags.None;

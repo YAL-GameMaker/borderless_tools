@@ -60,6 +60,21 @@
                     "returnType": 2
                 },
                 {
+                    "id": "b4a4b9ff-808e-5bb6-9fb5-52e6d871ee39",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": 1,
+                    "args": [
+                        2
+                    ],
+                    "externalName": "borderless_tools_set_shadow",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 11,
+                    "name": "borderless_tools_set_shadow",
+                    "returnType": 2
+                },
+                {
                     "id": "61dab98e-9c21-2562-7f89-330616fe7d1f",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
@@ -181,9 +196,9 @@
                         
                     ],
                     "externalName": "borderless_tools_get_monitors",
-                    "help": "borderless_tools_get_monitors(?out_list)->",
-                    "hidden": false,
-                    "kind": 2,
+                    "help": "",
+                    "hidden": true,
+                    "kind": 11,
                     "name": "borderless_tools_get_monitors",
                     "returnType": 2
                 },
@@ -193,12 +208,12 @@
                     "mvc": "1.0",
                     "argCount": 1,
                     "args": [
-                        2
+                        
                     ],
                     "externalName": "borderless_tools_prepare_buffer",
-                    "help": "borderless_tools_prepare_buffer(size:int)->buffer~",
-                    "hidden": false,
-                    "kind": 2,
+                    "help": "",
+                    "hidden": true,
+                    "kind": 11,
                     "name": "borderless_tools_prepare_buffer",
                     "returnType": 2
                 },
@@ -208,13 +223,12 @@
                     "mvc": "1.0",
                     "argCount": 2,
                     "args": [
-                        2,
-                        2
+                        
                     ],
                     "externalName": "borderless_tools_buffer_read_chars",
-                    "help": "borderless_tools_buffer_read_chars(buffer:buffer, len:int)->string~",
-                    "hidden": false,
-                    "kind": 2,
+                    "help": "",
+                    "hidden": true,
+                    "kind": 11,
                     "name": "borderless_tools_buffer_read_chars",
                     "returnType": 2
                 }
