@@ -17,5 +17,6 @@ draw_text(5, 30,
 	+ sfmt("\n2: True fullscreen (%)", window_get_fullscreen() ? "on" : "off")
 	+ sfmt("\n3: Fullscreen window (%)", frame.isFullscreen ? "on" : "off")
 	+ "\n4: Change alpha"
-	+ sfmt("\n5: Toggle interactions (%)", frame.input ? "on" : "off")
+	+ sfmt("\n5: Toggle interactions (%)", frame.canInput ? "on" : "off")
+	+ sfmt("\n6: Toggle resize (%)", frame.canResize ? "on" : "off")
 )

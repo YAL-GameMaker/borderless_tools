@@ -15,8 +15,11 @@ function WindowFrame() constructor {
 	
 	blend = c_white;
 	alpha = 1;
-	input = true;
 	doubleClickTime = borderless_tools_double_click_time(); // in ms!
+	mouseOverFrame = false;
+	
+	canInput = true;
+	canResize = true;
 	
 	titlebarHeight = sprite_get_height(sprCaption);
 	titlebarHeightMaximized = 21;
@@ -162,7 +165,7 @@ function WindowFrame() constructor {
 		}
 	}
 	
-	static setCursor = function(_cursor) {
+	static setWindowCursor = function(_cursor) {
 		if (window_get_cursor() != _cursor) {
 			window_set_cursor(_cursor);
 		}
@@ -177,6 +180,7 @@ function WindowFrame() constructor {
 	static getHeight = function() { return window_get_height() }
 	
 	static update = function() {
+		mouseOverFrame = false;
 		delayUpdate();
 		cover.ensure();
 		if (window_get_fullscreen() || isFullscreen) exit;
@@ -190,6 +194,7 @@ function WindowFrame() constructor {
 		var _buttons_x = getButtonsX(gw);
 		
 		var _flags = 0x0, _titleHit = false;
+		var _hitSomething = true;
 		if (window_get_fullscreen()) {
 			//
 		}
@@ -216,20 +221,24 @@ function WindowFrame() constructor {
 		)) {
 			_titleHit = true;
 		}
+		else {
+			_hitSomething = false;
+		}
+		mouseOverFrame = _hitSomething;
 		
 		if (drag.flags == 0) {
 			var _cursor/*:window_cursor*/ = defaultCursor;
-			if (input) switch (_flags) {
+			if (canInput && canResize) switch (_flags) {
 				case 1: case 4: _cursor = cr_size_we; break;
 				case 2: case 8: _cursor = cr_size_ns; break;
 				case 3: case 12: _cursor = cr_size_nwse; break;
 				case 6: case 9: _cursor = cr_size_nesw; break;
 			}
-			setCursor(_cursor);
+			setWindowCursor(_cursor);
 		}
 		
 		buttons.update(_buttons_x, _borderWidth, _titleHeight, mx, my);
-		if (input && mouse_check_button_pressed(mb_left)) {
+		if (canInput && mouse_check_button_pressed(mb_left)) {
 			if (_titleHit) {
 				var _now = current_time;
 				if (_now < lastTitleClickAt + doubleClickTime) {
@@ -248,7 +257,7 @@ function WindowFrame() constructor {
 				drag.start(_flags);
 			}
 		}
-		if (!input) {
+		if (!canInput) {
 			if (drag.flags != 0) drag.stop();
 		} else if (mouse_check_button_released(mb_left)) {
 			drag.stop();

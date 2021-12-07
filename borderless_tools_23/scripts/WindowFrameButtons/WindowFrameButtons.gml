@@ -1,5 +1,5 @@
 function WindowFrameButton(_sprite, _subimg, _onClick) constructor {
-	frame = /*#cast*/ undefined; /// @is {WindowFrame}
+	frame = /*#cast*/ undefined /*#as WindowFrame*/;
 	sprite = _sprite;
 	subimg = _subimg;
 	marginLeft = 0;
@@ -10,7 +10,7 @@ function WindowFrameButton(_sprite, _subimg, _onClick) constructor {
 	enabled = true;
 	fade = 0;
 	
-	click = _onClick;
+	click = _onClick /*#as function<WindowFrame, void>*/;
 	
 	static ease_inout_expo = function(argument0, argument1, argument2, argument3) {
 		argument0 /= argument3 * 0.5;
@@ -25,10 +25,11 @@ function WindowFrameButton(_sprite, _subimg, _onClick) constructor {
 	static getWidth = function() {
 		return sprite_get_width(sprite);
 	}
+	static update = function(_frame) {}
 	static drawUnderlay = function(_x, _y, _width, _height) {
 		var _alpha;
 		if (!enabled) {
-			_alpha = 0.1;
+			_alpha = 0;
 		} else if (pressed) {
 			_alpha = 0.7;
 			fade = 1;
@@ -47,7 +48,7 @@ function WindowFrameButton(_sprite, _subimg, _onClick) constructor {
 		draw_sprite_ext(sprite, subimg,
 			_x + (_width - sprite_get_width(sprite)) div 2,
 			_y + (_height - sprite_get_height(sprite)) div 2,
-			1, 1, 0, frame.blend, frame.alpha
+			1, 1, 0, frame.blend, frame.alpha * (enabled ? 1 : 0.3)
 		);
 	}
 }
@@ -57,6 +58,11 @@ function WindowFrameButtons(_frame) constructor {
 	buttons = [];
 	fadeTime = 0.2;
 	waitForMovement = { enabled: false, x: 0, y: 0 };
+	
+	// default buttons:
+	minimize = /*#cast*/ undefined /*#as WindowFrameButton*/;
+	maxrest = /*#cast*/ undefined /*#as WindowFrameButton*/;
+	close = /*#cast*/ undefined /*#as WindowFrameButton*/;
 	
 	static add = function(_button/*:WindowFrameButton*/)/*->WindowFrameButton*/ {
 		_button.frame = frame;
@@ -90,13 +96,14 @@ function WindowFrameButtons(_frame) constructor {
 		}
 		var _pressed = mouse_check_button_pressed(mb_left);
 		var _released = mouse_check_button_released(mb_left);
-		var _disable = frame.drag.flags != WindowFrameDragFlags.None || !frame.input;
+		var _disable = frame.drag.flags != WindowFrameDragFlags.None || !frame.canInput;
 		var n = array_length(buttons);
 		for (var i = 0; i < n; i++) {
 			var _button = buttons[i];
+			_button.update(frame);
 			_x += _button.marginLeft;
 			var _width = _button.getWidth();
-			if (_disable) {
+			if (_disable || !_button.enabled) {
 				_button.hover = false;
 				_button.pressed = false;
 			} else if (_over_row && _mx >= _x && _mx < _x + _width) {
@@ -107,7 +114,7 @@ function WindowFrameButtons(_frame) constructor {
 			}
 			if (_released && _button.pressed && _button.hover) {
 				_button.pressed = false;
-				_button.click();
+				_button.click(frame);
 			}
 			_x += _width + _button.marginRight;
 		}
@@ -137,10 +144,15 @@ function WindowFrameButtons_addDefaultButtons(_buttons/*:WindowFrameButtons*/) {
 			borderless_tools_syscommand(0xF020);
 		}, 1)
 	})));
+	
 	_buttons.maxrest = buttons.add(new WindowFrameButton(sprButtons, 1, method(_frame, function(_frame) {
 		if (isMaximized) restore(); else maximize();
 		buttons.reset();
 	})));
+	_buttons.maxrest.update = method(_buttons.maxrest, function(_frame/*:WindowFrame*/) {
+		self.enabled = _frame.canResize;
+	});
+	
 	_buttons.close = buttons.add(new WindowFrameButton(sprButtons, 3, function(_frame) {
 		game_end();
 	}));
