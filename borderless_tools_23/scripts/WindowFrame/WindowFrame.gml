@@ -282,7 +282,6 @@ function WindowFrame() constructor {
 	}
 	static draw = function() {
 		if (window_get_fullscreen() || isFullscreen) exit;
-		buttons.maxrest.subimg = isMaximized ? 2 : 1;
 		
 		var gw = getWidth();
 		var gh = getHeight();

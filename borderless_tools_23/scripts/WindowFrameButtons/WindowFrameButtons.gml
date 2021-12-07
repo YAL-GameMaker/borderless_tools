@@ -150,6 +150,7 @@ function WindowFrameButtons_addDefaultButtons(_buttons/*:WindowFrameButtons*/) {
 		buttons.reset();
 	})));
 	_buttons.maxrest.update = method(_buttons.maxrest, function(_frame/*:WindowFrame*/) {
+		self.subimg = _frame.isMaximized ? 2 : 1;
 		self.enabled = _frame.canResize;
 	});
 	
