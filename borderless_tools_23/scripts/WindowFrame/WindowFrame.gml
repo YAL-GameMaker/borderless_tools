@@ -253,7 +253,7 @@ function WindowFrame() constructor {
 						drag.start(WindowFrameDragFlags.Move);
 					}
 				}
-			} else if (_flags != 0) {
+			} else if (_flags != 0 && canResize) {
 				drag.start(_flags);
 			}
 		}
