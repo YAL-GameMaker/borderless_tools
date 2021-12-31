@@ -173,7 +173,7 @@
             "final": "",
             "functions": [
                 {
-                    "id": "d7751dc9-b86d-3c2a-5f3a-e3be94b38fb5",
+                    "id": "5a4a5711-5d53-8658-9fb5-61d5e2e89947",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": 0,
@@ -188,7 +188,7 @@
                     "returnType": 2
                 },
                 {
-                    "id": "17dd9c3b-59f3-7a75-f270-16cc06f11934",
+                    "id": "cc07648e-5b56-8fc3-6c32-4fc822d7e40e",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": -1,
@@ -203,7 +203,7 @@
                     "returnType": 2
                 },
                 {
-                    "id": "089f2d59-b65c-2d22-4de3-e8cac28f581a",
+                    "id": "d31e07d6-54fa-d5ab-7514-4afceb7f8de3",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": 1,
@@ -218,7 +218,7 @@
                     "returnType": 2
                 },
                 {
-                    "id": "68839472-278e-578e-290e-a217a17a5700",
+                    "id": "7ff79c36-bd13-8528-6b62-4b1fc4e0a14e",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": 2,
@@ -233,10 +233,13 @@
                     "returnType": 2
                 }
             ],
-            "init": "",
+            "init": "borderless_tools_init",
             "kind": 2,
             "order": [
-                
+                "5a4a5711-5d53-8658-9fb5-61d5e2e89947",
+                "cc07648e-5b56-8fc3-6c32-4fc822d7e40e",
+                "d31e07d6-54fa-d5ab-7514-4afceb7f8de3",
+                "7ff79c36-bd13-8528-6b62-4b1fc4e0a14e"
             ],
             "origname": "extensions\\gml.gml",
             "uncompress": false

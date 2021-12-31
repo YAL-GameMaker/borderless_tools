@@ -1,0 +1,11 @@
+-dce full
+-lib sfhx
+-lib sfgml
+-cp src
+-js borderless_tools_yy/extensions/borderless_tools_hx/borderless_tools_hx.yy._
+-D sfgml_dot_static=false
+-D sfgml_main=window_frame_init
+-D sfgml_snake_case
+-D sf-std-package=window_frame_std
+-D debug
+-main WindowFrame
