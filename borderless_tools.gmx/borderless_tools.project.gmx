@@ -24,22 +24,36 @@
   </datafiles>
   <NewExtensions>
     <extension index="0">extensions\borderless_tools</extension>
+    <extension index="1">extensions\borderless_tools_hx</extension>
+    <extension index="2">extensions\borderless_tools_m</extension>
+    <extension index="3">extensions\window_resize_fix</extension>
   </NewExtensions>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprites name="borderless_tools">
+      <sprite>sprites\spr_window_border</sprite>
+      <sprite>sprites\spr_window_buttons</sprite>
+      <sprite>sprites\spr_window_caption</sprite>
+      <sprite>sprites\spr_window_pixel</sprite>
+    </sprites>
+    <sprite>sprites\spr_test_icon</sprite>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\trace.gml</script>
+    <script>scripts\sfmt.gml</script>
+    <script>scripts\onoff.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_test</font>
+    <font>fonts\fnt_caption</font>
   </fonts>
   <objects name="objects">
-    <object>objects\obj_test</object>
+    <object>objects\obj_borderless_test</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_test</room>
+    <room>rooms\rm_borderless_test</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

@@ -1,1 +1,1 @@
-frame.draw();
+if (frame.alpha >= 1/255) frame.draw();

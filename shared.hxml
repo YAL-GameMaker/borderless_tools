@@ -1,0 +1,8 @@
+-dce full
+-lib sfhx
+-lib sfgml
+-lib hscript
+-lib docmd
+-cp src
+-main WindowFrame
+-D debug

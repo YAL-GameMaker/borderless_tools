@@ -8,6 +8,7 @@ set config=%~5
 echo Running post-build for %config%
 
 set extName=borderless_tools
+set extNameM=borderless_tools_m
 set dllName=borderless_tools
 set gmlDir14=%solutionDir%borderless_tools.gmx
 set gmlDir22=%solutionDir%borderless_tools_yy
@@ -15,10 +16,13 @@ set gmlDir23=%solutionDir%borderless_tools_23
 set ext14=%gmlDir14%\extensions\%extName%
 set ext22=%gmlDir22%\extensions\%extName%
 set ext23=%gmlDir23%\extensions\%extName%
+set ext14m=%gmlDir14%\extensions\%extNameM%
+set ext22m=%gmlDir22%\extensions\%extNameM%
 set dllRel=%dllName%.dll
 set cppRel=%dllName%.cpp
 set cppPath=%ext23%\%cppRel%
 set gmlPath=%ext23%\*.gml
+set gmlPathM=%ext22m%\*.gml
 set docName=%extName%.html
 set docPath=%solutionDir%export\%docName%
 
@@ -47,7 +51,11 @@ if %ERRORLEVEL% EQU 0 (
 	--copy "%dllPath%" "%dllRel%:%arch%" ^
 	--copy "%cppPath%" "%cppRel%" ^
 	--copy "%gmlPath%" "*.gml"
+	:: pre-2.3 macros
+	gmxgen "%ext22m%\%extNameM%.yy"
 
+	gmxgen "%ext14m%.extension.gmx" ^
+	--copy "%gmlPathM%" "*.gml"
 ) else (
 
 	echo Copying DLLs...
@@ -62,6 +70,7 @@ if %ERRORLEVEL% EQU 0 (
 	echo Copying GML files...
 	robocopy %ext23% %ext22% *.gml /L >nul
 	robocopy %ext23% %ext14% *.gml /L >nul
+	robocopy %ext22m% %ext14% *.gml /L >nul
 
 	echo postBuild.bat: Warning N/A: Could not find GmxGen - extensions will not be updated automatically. See https://github.com/YAL-GameMaker-Tools/GmxGen for setup.
 )

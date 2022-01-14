@@ -1,7 +1,8 @@
-// Generated at 2021-12-27 06:19:59 (384ms) for v2.3.1+
+// Generated at 2022-01-14 14:54:39 (919ms) for v2.3.7+
 /// @lint nullToAny true
 #region metatype
 globalvar haxe_type_markerValue; haxe_type_markerValue = [];
+globalvar mt_WindowFrameCaption; mt_WindowFrameCaption = new haxe_class(-1, "WindowFrameCaption");
 globalvar mt_WindowFrameCover; mt_WindowFrameCover = new haxe_class(-1, "WindowFrameCover");
 globalvar mt_haxe_class; mt_haxe_class = new haxe_class(-1, "haxe_class");
 #endregion
@@ -73,11 +74,17 @@ function Std_stringify(_value) {
 function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructor {
 	/// WindowFrame(...:sprite?:sprite?)
 	/// @param ...
+	static debug = undefined; /// @is {bool}
+	static blend = undefined; /// @is {int}
+	static alpha = undefined; /// @is {number}
+	static doubleClickTime = undefined; /// @is {int}
+	static mouseOverFrame = undefined; /// @is {bool}
+	static canInput = undefined; /// @is {bool}
+	static canResize = undefined; /// @is {bool}
 	static sprBorder = undefined; /// @is {sprite}
 	static sprCaption = undefined; /// @is {sprite}
 	static sprButtons = undefined; /// @is {sprite}
 	static sprPixel = undefined; /// @is {sprite}
-	static debug = undefined; /// @is {bool}
 	static mylog = function(_args1) {
 		if (!self.debug) return 0;
 		var _s = "[WindowFrame] ";
@@ -88,25 +95,17 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 		}
 		show_debug_message(_s);
 	}
-	static blend = undefined; /// @is {int}
-	static alpha = undefined; /// @is {number}
-	static doubleClickTime = undefined; /// @is {int}
-	static mouseOverFrame = undefined; /// @is {bool}
-	static canInput = undefined; /// @is {bool}
-	static canResize = undefined; /// @is {bool}
-	static titlebarHeight = undefined; /// @is {int}
-	static titlebarHeightMaximized = undefined; /// @is {int}
-	static lastTitleClickAt = undefined; /// @is {int}
-	static resizePadding = undefined; /// @is {int}
-	static borderWidth = undefined; /// @is {int}
 	static buttons = undefined; /// @is {WindowFrameButtons}
+	static caption = undefined; /// @is {WindowFrameCaption}
 	static drag = undefined; /// @is {WindowFrameDrag}
 	static delayMgr = undefined; /// @is {WindowFrameDelay}
 	static cover = undefined; /// @is {WindowFrameCover}
+	static lastTitleClickAt = undefined; /// @is {int}
+	static resizePadding = undefined; /// @is {int}
+	static borderWidth = undefined; /// @is {int}
 	static defaultCursor = undefined; /// @is {cr}
-	static isMaximized = undefined; /// @is {bool}
-	static isFullscreen = undefined; /// @is {bool}
-	static restoreRect = undefined; /// @is {WindowFrameRect}
+	static setCursor = undefined; /// @is {bool}
+	static currentCursor = undefined; /// @is {cr}
 	static delay0 = function(_func, _delay) {
 		self.delayMgr.add(_func, _delay);
 	}
@@ -123,9 +122,6 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 	static delay4 = function(_func, _delay, _arg0, _arg1, _arg2, _arg3) {
 		if (false) show_debug_message(argument[5]);
 		self.delayMgr.add(_func, _delay, _arg0, _arg1, _arg2, _arg3);
-	}
-	static getButtonsX = function(__width) {
-		return ((self.isMaximized ? __width : __width - self.borderWidth)) - self.buttons.getWidth();
 	}
 	static getActiveMonitor = function() {
 		var __list = WindowFrame_getActiveMonitor_list;
@@ -144,33 +140,59 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 		}
 		var __item = __list[|0];
 		if (__item == undefined) {
-			var _x = 0;
-			var _y = 0;
-			var _w = display_get_width();
-			var _h = display_get_height();
-			if (_h == undefined) _h = 0;
-			if (_w == undefined) _w = 0;
-			if (_y == undefined) _y = 0;
-			if (_x == undefined) _x = 0;
-			var _this1 = [/* x: */_x, /* y: */_y, /* width: */_w, /* height: */_h];
-			var _x = 0;
-			var _y = 0;
-			var _w = display_get_width();
-			var _h = display_get_height() - 40;
-			if (_h == undefined) _h = 0;
-			if (_w == undefined) _w = 0;
-			if (_y == undefined) _y = 0;
-			if (_x == undefined) _x = 0;
-			__item = [/* screen: */_this1, /* workspace: */[/* x: */_x, /* y: */_y, /* width: */_w, /* height: */_h], /* flags: */0];
+			__item = [/* screen: */_WindowFrameRect_WindowFrameRect_Impl___new(0, 0, display_get_width(), display_get_height()), /* workspace: */_WindowFrameRect_WindowFrameRect_Impl___new(0, 0, display_get_width(), display_get_height() - 40), /* flags: */0];
 			__list[|0] = __item;
 		}
 		return __item;
 	}
+	static __isMaximized = undefined; /// @is {bool}
+	static isFullscreen = undefined; /// @is {bool}
+	static restoreRect = undefined; /// @is {WindowFrameRect}
+	static minimize = function() {
+		if (borderless_tools_is_minimized()) return 0;
+		self.buttons.reset();
+		self.delayMgr.add(function(_buttons) {
+			_buttons.waitForMovement.enabled = true;
+			_buttons.waitForMovement.x = window_mouse_get_x();
+			_buttons.waitForMovement.y = window_mouse_get_y();
+			borderless_tools_syscommand(61472);
+		}, 1, self.buttons);
+	}
+	static minimise = function() {
+		if (!borderless_tools_is_minimized()) {
+			self.buttons.reset();
+			self.delayMgr.add(function(_buttons) {
+				_buttons.waitForMovement.enabled = true;
+				_buttons.waitForMovement.x = window_mouse_get_x();
+				_buttons.waitForMovement.y = window_mouse_get_y();
+				borderless_tools_syscommand(61472);
+			}, 1, self.buttons);
+		}
+	}
+	static isMinimized = function() {
+		return borderless_tools_is_minimized();
+	}
+	static isMinimised = function() {
+		return borderless_tools_is_minimized();
+	}
 	static maximize = function() {
-		if (self.isMaximized || self.isFullscreen) return 0;
-		self.isMaximized = true;
+		if (self.__isMaximized || self.isFullscreen || window_get_fullscreen()) return 0;
+		self.__isMaximized = true;
 		self.storeRect();
 		self.maximize_1();
+	}
+	static maximise = function() {
+		if (!(self.__isMaximized || self.isFullscreen || window_get_fullscreen())) {
+			self.__isMaximized = true;
+			self.storeRect();
+			self.maximize_1();
+		}
+	}
+	static isMaximized = function() {
+		return self.__isMaximized;
+	}
+	static isMaximised = function() {
+		return self.__isMaximized;
 	}
 	static maximize_1 = function() {
 		var __work = self.getActiveMonitor()[1/* workspace */];
@@ -192,15 +214,22 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 			}, 1, self);
 			return 0;
 		}
-		if (!__force && !self.isMaximized && !self.isFullscreen) return 0;
-		self.isMaximized = false;
+		if (!__force && !self.__isMaximized && !self.isFullscreen) return 0;
+		self.__isMaximized = false;
 		self.isFullscreen = false;
 		var __rect = self.restoreRect;
 		if (self.debug) self.mylog("restore: ", __rect);
 		_WindowFrameRect_WindowFrameRect_Impl__setWindowRect(__rect);
 		borderless_tools_set_shadow(true);
 	}
-	static setFullscreen = function(__mode, __wasFullscreen) {
+	static setFullscreen = function(_mode) {
+		self.setFullscreen_1(_mode);
+	}
+	static getFullscreen = function() {
+		if (window_get_fullscreen()) return 1;
+		if (self.isFullscreen) return 2; else return 0;
+	}
+	static setFullscreen_1 = function(__mode, __wasFullscreen) {
 		if (__wasFullscreen == undefined) __wasFullscreen = false;
 		if (false) show_debug_message(argument[1]);
 		if (self.debug) self.mylog("setFullscreen(mode:", __mode, ", wasfs:", __wasFullscreen, ")");
@@ -214,7 +243,7 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 				if (self.isFullscreen) {
 					self.restore();
 					self.delayMgr.add(function(_f) {
-						_f.setFullscreen(1)
+						_f.setFullscreen_1(1)
 					}, 1, self);
 					return 0;
 				} else self.storeRect();
@@ -224,13 +253,13 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 				if (window_get_fullscreen()) {
 					window_set_fullscreen(false);
 					self.delayMgr.add(function(_f) {
-						_f.setFullscreen(2, true)
+						_f.setFullscreen_1(2, true)
 					}, 10, self);
 					return 0;
 				}
 				if (self.isFullscreen) return 0;
 				self.isFullscreen = true;
-				if (!self.isMaximized && !__wasFullscreen) self.storeRect();
+				if (!self.__isMaximized && !__wasFullscreen) self.storeRect();
 				_WindowFrameRect_WindowFrameRect_Impl__setWindowRect(self.getActiveMonitor()[0/* screen */]);
 				borderless_tools_set_shadow(false);
 				break;
@@ -238,26 +267,26 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 				if (window_get_fullscreen() && self.isFullscreen) {
 					window_set_fullscreen(false);
 					self.delayMgr.add(function(_f) {
-						_f.setFullscreen(0)
+						_f.setFullscreen_1(0)
 					}, 1, self);
 					return 0;
 				}
 				if (window_get_fullscreen()) {
 					window_set_fullscreen(false);
-				} else if (self.isMaximized) {
+				} else if (self.__isMaximized) {
 					self.isFullscreen = false;
 					self.maximize_1();
 				} else self.restore();
 		}
 	}
 	static setWindowCursor = function(_cr1) {
-		if (window_get_cursor() != _cr1) window_set_cursor(_cr1);
+		self.currentCursor = _cr1;
+		if (self.setCursor) {
+			if (window_get_cursor() != _cr1) window_set_cursor(_cr1);
+		}
 	}
 	static getBorderWidth = function() {
-		if (self.isMaximized) return 0; else return self.borderWidth;
-	}
-	static getTitlebarHeight = function() {
-		if (self.isMaximized) return self.titlebarHeightMaximized; else return self.titlebarHeight;
+		if (self.__isMaximized) return 0; else return self.borderWidth;
 	}
 	static getWidth = function() {
 		return window_get_width();
@@ -265,6 +294,10 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 	static getHeight = function() {
 		return window_get_height();
 	}
+	static getDragFlags = function() {
+		return self.drag.flags;
+	}
+	static drawBorder = undefined; /// @is {function<frame:WindowFrame; x:int; y:int; width:int; height:int; void>}
 	static update = function() {
 		self.mouseOverFrame = false;
 		self.delayMgr.update();
@@ -274,20 +307,21 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 		var _my = (window_mouse_get_y() | 0);
 		var _gw = window_get_width();
 		var _gh = window_get_height();
-		var __borderWidth = (self.isMaximized ? 0 : self.borderWidth);
-		var __titleHeight = (self.isMaximized ? self.titlebarHeightMaximized : self.titlebarHeight);
-		var __buttons_x = self.getButtonsX(_gw);
+		var __borderWidth = (self.__isMaximized ? 0 : self.borderWidth);
+		var __this = self.caption;
+		var __titleHeight = (__this.frame.__isMaximized ? __this.heightMaximized : __this.heightNormal);
+		var __buttons_x = self.buttons.getX(_gw);
 		var __flags = 0;
 		var __titleHit = false;
 		var __hitSomething = true;
 		if (!window_get_fullscreen()) {
-			if (!point_in_rectangle(_mx, _my, __buttons_x, __borderWidth, _gw - __borderWidth - ((self.isMaximized ? 0 : self.resizePadding)), __borderWidth + __titleHeight)) {
-				if (!self.isMaximized && !point_in_rectangle(_mx, _my, self.resizePadding, self.resizePadding, _gw - self.resizePadding, _gh - self.resizePadding)) {
+			if (!point_in_rectangle(_mx, _my, __buttons_x, __borderWidth, _gw - __borderWidth - ((self.__isMaximized ? 0 : self.resizePadding)), __borderWidth + __titleHeight)) {
+				if (!self.__isMaximized && self.canResize && !point_in_rectangle(_mx, _my, self.resizePadding, self.resizePadding, _gw - self.resizePadding, _gh - self.resizePadding)) {
 					if (_mx < self.resizePadding) __flags |= 1;
 					if (_my < self.resizePadding) __flags |= 2;
 					if (_mx >= _gw - self.resizePadding) __flags |= 4;
 					if (_my >= _gh - self.resizePadding) __flags |= 8;
-				} else if (point_in_rectangle(_mx, _my, 0, 0, _gw, self.titlebarHeight)) {
+				} else if (point_in_rectangle(_mx, _my, 0, 0, _gw, __titleHeight)) {
 					__titleHit = true;
 				} else __hitSomething = false;
 			}
@@ -301,17 +335,17 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 				case 3: case 12: __cursor = cr_size_nwse; break;
 				case 6: case 9: __cursor = cr_size_nesw; break;
 			}
-			if (window_get_cursor() != __cursor) window_set_cursor(__cursor);
+			self.setWindowCursor(__cursor);
 		}
 		self.buttons.update(__buttons_x, __borderWidth, __titleHeight, _mx, _my);
 		if (self.canInput && mouse_check_button_pressed(1)) {
 			if (__titleHit) {
 				var __now = current_time;
 				if (__now < self.lastTitleClickAt + self.doubleClickTime) {
-					if (self.isMaximized) self.restore(); else self.maximize();
+					if (self.__isMaximized) self.restore(); else self.maximize();
 				} else {
 					self.lastTitleClickAt = __now;
-					if (self.isMaximized) self.drag.start(32); else self.drag.start(16);
+					if (self.__isMaximized) self.drag.start(32); else self.drag.start(16);
 				}
 			} else if (__flags != 0 && self.canResize) {
 				self.drag.start(__flags);
@@ -323,47 +357,32 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 			self.drag.stop();
 		}
 	}
-	static drawBorder = function(__x, __y, __width, __height) {
-		draw_sprite_stretched_ext(self.sprBorder, 0, __x, __y, __width, __height, self.blend, self.alpha);
-	}
-	static drawCaptionRect = function(__x, __y, __width, __height, __buttons_x) {
-		draw_sprite_stretched_ext(self.sprCaption, (window_has_focus() ? 1 : 0), __x, __y, __width, __height, self.blend, self.alpha);
-	}
-	static drawCaptionText = function(__x, __y, __width, __height) {
-		var __h = draw_get_halign();
-		var __v = draw_get_valign();
-		draw_set_halign(0);
-		draw_set_valign(0);
-		draw_text_ext(__x + 4, __y + (__height div 2), "", -1, __width);
-		draw_set_halign(__h);
-		draw_set_valign(__v);
-	}
 	static draw = function() {
 		if (window_get_fullscreen() || self.isFullscreen) return 0;
 		var _gw = window_get_width();
 		var _gh = window_get_height();
 		__display_set_gui_maximise_base(browser_width / _gw, browser_height / _gh, _gw % 2 / -2, _gh % 2 / -2);
-		var __borderWidth = (self.isMaximized ? 0 : self.borderWidth);
-		var __titlebarHeight = (self.isMaximized ? self.titlebarHeightMaximized : self.titlebarHeight);
-		var __buttons_x = self.getButtonsX(_gw);
-		if (!self.isMaximized) self.drawBorder(0, 0, _gw, _gh);
-		self.drawCaptionRect(__borderWidth, __borderWidth, _gw - __borderWidth * 2, __titlebarHeight, __buttons_x);
-		self.drawCaptionText(__borderWidth, __borderWidth, __buttons_x - __borderWidth, __titlebarHeight);
+		var __borderWidth = (self.__isMaximized ? 0 : self.borderWidth);
+		var __this = self.caption;
+		var __titlebarHeight = (__this.frame.__isMaximized ? __this.heightMaximized : __this.heightNormal);
+		var __buttons_x = self.buttons.getX(_gw);
+		if (!self.__isMaximized) self.drawBorder(self, 0, 0, _gw, _gh);
+		self.caption.drawBackground(self, __borderWidth, __borderWidth, _gw - __borderWidth * 2, __titlebarHeight, __buttons_x);
+		self.caption.drawText(self, __borderWidth, __borderWidth, __buttons_x - __borderWidth, __titlebarHeight);
 		self.buttons.draw(__buttons_x, __borderWidth, __titlebarHeight);
 		__display_gui_restore();
 	}
-	static getDragFlags = function() {
-		return self.drag.flags;
-	}
 	if (false) show_debug_message(argument[3]);
-	self.restoreRect = [/* x: */0, /* y: */0, /* width: */0, /* height: */0];
+	self.drawBorder = WindowFrame_drawBorder_default;
+	self.restoreRect = _WindowFrameRect_WindowFrameRect_Impl___new();
 	self.isFullscreen = false;
-	self.isMaximized = false;
+	self.__isMaximized = false;
+	self.currentCursor = cr_arrow;
+	self.setCursor = true;
 	self.defaultCursor = cr_arrow;
 	self.borderWidth = 2;
 	self.resizePadding = 6;
 	self.lastTitleClickAt = -5000;
-	self.titlebarHeightMaximized = 21;
 	self.canResize = true;
 	self.canInput = true;
 	self.mouseOverFrame = false;
@@ -379,45 +398,37 @@ function WindowFrame(_sprBorder, _sprCaption, _sprButtons, _sprPixel) constructo
 	self.sprCaption = _sprCaption;
 	self.sprButtons = _sprButtons;
 	self.sprPixel = _sprPixel;
-	self.titlebarHeight = sprite_get_height(_sprCaption);
+	self.caption = new WindowFrameCaption(self);
 	self.drag = new WindowFrameDrag(self);
 	self.delayMgr = new WindowFrameDelay();
 	self.cover = new WindowFrameCover(self);
 	_WindowFrameRect_WindowFrameRect_Impl__getWindowRect(self.restoreRect);
 	self.buttons = new WindowFrameButtons(self);
 	self.buttons.addDefaultButtons();
+	self.delayMgr.add(function(_frame) {
+		if (_frame.__isMaximized || _frame.isFullscreen || window_get_fullscreen()) return 0;
+		borderless_tools_set_shadow(true);
+	}, 3, self);
 	//
 }
 
-function WindowFrame_draw9slice(_spr, _subimg, _x, _y, _w, _h, _c, _a) {
-	/// WindowFrame_draw9slice(spr:sprite, subimg:int, x:int, y:int, w:int, h:int, c:int, a:number)
-	/// @param {sprite} spr
-	/// @param {int} subimg
-	/// @param {int} x
-	/// @param {int} y
-	/// @param {int} w
-	/// @param {int} h
-	/// @param {int} c
-	/// @param {number} a
-	draw_sprite_stretched_ext(_spr, _subimg, _x, _y, _w, _h, _c, _a);
-}
-
-function WindowFrame_main() {
-	/// WindowFrame_main()
-	
+function WindowFrame_drawBorder_default(_frame, __x, __y, __width, __height) {
+	// WindowFrame_drawBorder_default(frame:WindowFrame, _x:int, _y:int, _width:int, _height:int)
+	draw_sprite_stretched_ext(_frame.sprBorder, (window_has_focus() ? 1 : 0), __x, __y, __width, __height, _frame.blend, _frame.alpha);
 }
 
 #endregion
 
 #region WindowFrameButton
 
-function WindowFrameButton(_sprite1, _subimg, _onClick) constructor {
-	/// WindowFrameButton(sprite:sprite, subimg:int, onClick:function<WindowFrame; void>)
-	/// @param {sprite} sprite
+function WindowFrameButton(_frame, _icon, _subimg, _onClick) constructor {
+	/// WindowFrameButton(frame:WindowFrame, icon:sprite, subimg:int, onClick:function<button:WindowFrameButton; void>)
+	/// @param {WindowFrame} frame
+	/// @param {sprite} icon
 	/// @param {int} subimg
-	/// @param {function<WindowFrame; void>} onClick
+	/// @param {function<button:WindowFrameButton; void>} onClick
 	static frame = undefined; /// @is {WindowFrame}
-	static sprite = undefined; /// @is {sprite}
+	static icon = undefined; /// @is {sprite}
 	static subimg = undefined; /// @is {int}
 	static marginLeft = undefined; /// @is {int}
 	static marginRight = undefined; /// @is {int}
@@ -425,16 +436,15 @@ function WindowFrameButton(_sprite1, _subimg, _onClick) constructor {
 	static pressed = undefined; /// @is {bool}
 	static enabled = undefined; /// @is {bool}
 	static fade = undefined; /// @is {number}
-	static click = undefined; /// @is {function<WindowFrame; void>}
-	static getWidth = function() {
-		return sprite_get_width(self.sprite);
-	}
-	static update = undefined; /// @is {function<b:WindowFrameButton; void>}
-	static drawUnderlay = undefined; /// @is {function<b:WindowFrameButton; _x:number; _y:number; _width:number; _height:number; void>}
-	static drawIcon = undefined; /// @is {function<b:WindowFrameButton; x:int; y:int; width:int; height:int; void>}
+	static click = undefined; /// @is {function<button:WindowFrameButton; void>}
+	static getWidth = undefined; /// @is {function<button:WindowFrameButton; int>}
+	static update = undefined; /// @is {function<button:WindowFrameButton; void>}
+	static drawUnderlay = undefined; /// @is {function<button:WindowFrameButton; x:number; y:number; width:number; height:number; void>}
+	static drawIcon = undefined; /// @is {function<button:WindowFrameButton; x:int; y:int; width:int; height:int; void>}
 	self.drawIcon = WindowFrameButton_drawIcon_default;
 	self.drawUnderlay = WindowFrameButton_drawUnderlay_default;
 	self.update = function(__) {}
+	self.getWidth = WindowFrameButton_getWidth_default;
 	self.fade = 0.;
 	self.enabled = true;
 	self.pressed = false;
@@ -442,36 +452,33 @@ function WindowFrameButton(_sprite1, _subimg, _onClick) constructor {
 	self.marginRight = 0;
 	self.marginLeft = 0;
 	self.frame = undefined;
-	self.sprite = _sprite1;
+	self.frame = _frame;
+	self.icon = _icon;
 	self.subimg = _subimg;
 	self.click = _onClick;
 	//
 }
 
-function WindowFrameButton_ease_inout_expo(_argument0, _argument1, _argument2, _argument3) {
-	/// WindowFrameButton_ease_inout_expo(argument:number, argument:number, argument:number, argument:number)->number
-	/// @param {number} argument
-	/// @param {number} argument
-	/// @param {number} argument
-	/// @param {number} argument
-	_argument0 /= _argument3 * 0.5;
-	if (_argument0 < 1) return _argument2 * 0.5 * power(2, 10 * (_argument0 - 1)) + _argument1;
-	_argument0--;
-	return _argument2 * 0.5 * (-power(2, -10 * _argument0) + 2) + _argument1;
+function WindowFrameButton_ease_inout_expo(_a, _b, _c, _d) {
+	// WindowFrameButton_ease_inout_expo(a:number, b:number, c:number, d:number)->number
+	_a /= _d * 0.5;
+	if (_a < 1) return _c * 0.5 * power(2, 10 * (_a - 1)) + _b;
+	_a--;
+	return _c * 0.5 * (-power(2, -10 * _a) + 2) + _b;
 }
 
-function WindowFrameButton_drawUnderlay_default(_b, __x, __y, __width, __height) {
-	/// WindowFrameButton_drawUnderlay_default(b:WindowFrameButton, _x:number, _y:number, _width:number, _height:number)
-	/// @param {WindowFrameButton} b
-	/// @param {number} _x
-	/// @param {number} _y
-	/// @param {number} _width
-	/// @param {number} _height
-	var __alpha;
+function WindowFrameButton_getWidth_default(_b) {
+	// WindowFrameButton_getWidth_default(b:WindowFrameButton)->int
+	return sprite_get_width(_b.icon);
+}
+
+function WindowFrameButton_drawUnderlay_default(_b, _x, _y, _width, _height) {
+	// WindowFrameButton_drawUnderlay_default(b:WindowFrameButton, x:number, y:number, width:number, height:number)
+	var _alpha1;
 	var _frame = _b.frame;
 	if (_b.enabled) {
 		if (_b.pressed) {
-			__alpha = 0.7;
+			_alpha1 = 0.7;
 			_b.fade = 1;
 		} else {
 			var _dt = delta_time / 1000000;
@@ -480,21 +487,17 @@ function WindowFrameButton_drawUnderlay_default(_b, __x, __y, __width, __height)
 			} else if (_b.fade > 0) {
 				_b.fade = max(_b.fade - _dt / _frame.buttons.fadeTime, 0);
 			}
-			__alpha = _b.fade * 0.3;
+			_alpha1 = _b.fade * 0.3;
 		}
-	} else __alpha = 0.;
-	draw_sprite_stretched_ext(_frame.sprPixel, 0, __x, __y, _b.getWidth(), __height, _frame.blend, _frame.alpha * __alpha);
+	} else _alpha1 = 0.;
+	draw_sprite_stretched_ext(_frame.sprPixel, 0, _x, _y, _width, _height, _frame.blend, _frame.alpha * _alpha1);
 }
 
 function WindowFrameButton_drawIcon_default(_b, _x, _y, _width, _height) {
-	/// WindowFrameButton_drawIcon_default(b:WindowFrameButton, x:int, y:int, width:int, height:int)
-	/// @param {WindowFrameButton} b
-	/// @param {int} x
-	/// @param {int} y
-	/// @param {int} width
-	/// @param {int} height
+	// WindowFrameButton_drawIcon_default(b:WindowFrameButton, x:int, y:int, width:int, height:int)
 	var _frame = _b.frame;
-	draw_sprite_ext(_b.sprite, _b.subimg, (_x + ((_width - sprite_get_width(_b.sprite)) div 2)), _y + ((_height - sprite_get_height(_b.sprite)) div 2), 1, 1, 0, _frame.blend, _frame.alpha * ((_b.enabled ? 1 : 0.3)));
+	var _icon = _b.icon;
+	draw_sprite_ext(_icon, _b.subimg, (_x + ((_width - sprite_get_width(_icon)) div 2)), _y + ((_height - sprite_get_height(_icon)) div 2), 1, 1, 0, _frame.blend, _frame.alpha * ((_b.enabled ? 1 : 0.3)));
 }
 
 #endregion
@@ -502,34 +505,35 @@ function WindowFrameButton_drawIcon_default(_b, _x, _y, _width, _height) {
 #region WindowFrameButtons
 
 function WindowFrameButtons(_frame) constructor {
-	/// WindowFrameButtons(frame:WindowFrame)
-	/// @param {WindowFrame} frame
+	// WindowFrameButtons(frame:WindowFrame)
 	static frame = undefined; /// @is {WindowFrame}
-	static buttons = undefined; /// @is {array<WindowFrameButton>}
+	static array = undefined; /// @is {array<WindowFrameButton>}
 	static fadeTime = undefined; /// @is {number}
 	static waitForMovement = undefined; /// @is {WindowFrameButtons_waitForMovement}
 	static minimize = undefined; /// @is {WindowFrameButton}
 	static maxrest = undefined; /// @is {WindowFrameButton}
 	static close = undefined; /// @is {WindowFrameButton}
 	static add = function(_button) {
-		_button.frame = self.frame;
-		gml_internal_ArrayImpl_push(self.buttons, _button);
+		gml_internal_ArrayImpl_push(self.array, _button);
 		return _button;
 	}
 	static getWidth = function() {
 		var _w = 0;
 		var __g = 0;
-		var __g1 = self.buttons;
+		var __g1 = self.array;
 		while (__g < array_length(__g1)) {
 			var _button = __g1[__g];
 			__g++;
-			_w += _button.marginLeft + _button.getWidth() + _button.marginRight;
+			_w += _button.marginLeft + _button.getWidth(_button) + _button.marginRight;
 		}
 		return _w;
 	}
+	static getX = function(_windowWidth) {
+		return _windowWidth - ((self.frame.__isMaximized ? 0 : self.frame.borderWidth)) - self.getWidth();
+	}
 	static reset = function() {
 		var __g = 0;
-		var __g1 = self.buttons;
+		var __g1 = self.array;
 		while (__g < array_length(__g1)) {
 			var _button = __g1[__g];
 			__g++;
@@ -547,12 +551,11 @@ function WindowFrameButtons(_frame) constructor {
 		var _released = mouse_check_button_released(1);
 		var _disable = self.frame.drag.flags != 0 || !self.frame.canInput;
 		var _i = 0;
-		for (var __g1 = array_length(self.buttons); _i < __g1; _i++) {
-			var _button = self.buttons[_i];
-			WindowFrameButton_current = _button;
+		for (var __g1 = array_length(self.array); _i < __g1; _i++) {
+			var _button = self.array[_i];
 			_button.update(_button);
 			_x += _button.marginLeft;
-			var _width = _button.getWidth();
+			var _width = _button.getWidth(_button);
 			if (_disable || !_button.enabled) {
 				_button.hover = false;
 				_button.pressed = false;
@@ -562,46 +565,44 @@ function WindowFrameButtons(_frame) constructor {
 			} else _button.hover = false;
 			if (_released && _button.pressed && _button.hover) {
 				_button.pressed = false;
-				_button.click(self.frame);
+				_button.click(_button);
 			}
 			_x += _width + _button.marginRight;
 		}
-		WindowFrameButton_current = undefined;
 	}
 	static draw = function(_x, _y, _height) {
 		var _i = 0;
-		for (var __g1 = array_length(self.buttons); _i < __g1; _i++) {
-			var _button = self.buttons[_i];
-			WindowFrameButton_current = _button;
+		for (var __g1 = array_length(self.array); _i < __g1; _i++) {
+			var _button = self.array[_i];
 			_x += _button.marginLeft;
-			var _width = _button.getWidth();
+			var _width = _button.getWidth(_button);
 			_button.drawUnderlay(_button, _x, _y, _width, _height);
 			_button.drawIcon(_button, _x, _y, _width, _height);
 			_x += _width + _button.marginRight;
 		}
-		WindowFrameButton_current = undefined;
 	}
 	static addDefaultButtons = function() {
-		self.minimize = self.add(new WindowFrameButton(self.frame.sprButtons, 0, function(_frame) {
+		var _button = new WindowFrameButton(self.frame, self.frame.sprButtons, 0, function(_button) {
+			_button.frame.minimize()
+		});
+		gml_internal_ArrayImpl_push(self.array, _button);
+		self.minimize = _button;
+		var _button = new WindowFrameButton(self.frame, self.frame.sprButtons, 1, function(_button) {
+			var _frame = _button.frame;
+			if (_frame.__isMaximized) _frame.restore(); else _frame.maximize();
 			_frame.buttons.reset();
-			_frame.delayMgr.add(function(_buttons) {
-				_buttons.waitForMovement.enabled = true;
-				_buttons.waitForMovement.x = window_mouse_get_x();
-				_buttons.waitForMovement.y = window_mouse_get_y();
-				borderless_tools_syscommand(61472);
-			}, 1, _frame.buttons);
-		}));
-		self.maxrest = self.add(new WindowFrameButton(self.frame.sprButtons, 1, function(_frame) {
-			if (_frame.isMaximized) _frame.restore(); else _frame.maximize();
-			_frame.buttons.reset();
-		}));
+		});
+		gml_internal_ArrayImpl_push(self.array, _button);
+		self.maxrest = _button;
 		self.maxrest.update = function(_b) {
-			_b.subimg = (_b.frame.isMaximized ? 2 : 1);
+			_b.subimg = (_b.frame.__isMaximized ? 2 : 1);
 			_b.enabled = _b.frame.canResize;
 		}
-		self.close = self.add(new WindowFrameButton(self.frame.sprButtons, 3, function(_frame) {
+		var _button = new WindowFrameButton(self.frame, self.frame.sprButtons, 3, function(__) {
 			game_end()
-		}));
+		});
+		gml_internal_ArrayImpl_push(self.array, _button);
+		self.close = _button;
 		self.close.drawUnderlay = function(_b, __x, __y, __width, __height) {
 			var _frame = _b.frame;
 			var __alpha = 0.;
@@ -620,12 +621,12 @@ function WindowFrameButtons(_frame) constructor {
 				}
 				__alpha = _frame.alpha * _b.fade;
 			}
-			draw_sprite_stretched_ext(_frame.sprPixel, 0, __x, __y, _b.getWidth(), __height, 2298344, __alpha);
+			draw_sprite_stretched_ext(_frame.sprPixel, 0, __x, __y, _b.getWidth(_b), __height, 2298344, __alpha);
 		}
 	}
 	self.waitForMovement = new WindowFrameButtons_waitForMovement();
 	self.fadeTime = 0.2;
-	self.buttons = [];
+	self.array = [];
 	self.frame = _frame;
 	//
 }
@@ -643,6 +644,66 @@ function WindowFrameButtons_waitForMovement() constructor {
 	self.x = 0.;
 	self.enabled = false;
 	//
+}
+
+#endregion
+
+#region WindowFrameCaption
+
+function WindowFrameCaption(_frame) constructor {
+	// WindowFrameCaption(frame:WindowFrame)
+	static frame = undefined; /// @is {WindowFrame}
+	static text = undefined; /// @is {string}
+	static font = undefined; /// @is {font}
+	static icon = undefined; /// @is {sprite}
+	static heightNormal = undefined; /// @is {int}
+	static heightMaximized = undefined; /// @is {int}
+	static getHeight = function() {
+		if (self.frame.__isMaximized) return self.heightMaximized; else return self.heightNormal;
+	}
+	static drawBackground = undefined; /// @is {function<frame:WindowFrame; x:int; y:int; width:int; height:int; buttonsX:int; void>}
+	static drawText = undefined; /// @is {function<frame:WindowFrame; x:int; y:int; width:int; height:int; void>}
+	self.drawText = WindowFrameCaption_drawCaptionText_default;
+	self.drawBackground = WindowFrameCaption_drawCaptionRect_default;
+	self.icon = -1;
+	self.font = -1;
+	self.text = window_get_caption();
+	self.frame = _frame;
+	self.heightNormal = sprite_get_height(_frame.sprCaption);
+	self.heightMaximized = round(self.heightNormal * 2 / 3);
+	static __class__ = mt_WindowFrameCaption;
+}
+
+function WindowFrameCaption_drawCaptionRect_default(_frame, __x, __y, __width, __height, __buttons_x) {
+	// WindowFrameCaption_drawCaptionRect_default(frame:WindowFrame, _x:int, _y:int, _width:int, _height:int, _buttons_x:int)
+	draw_sprite_stretched_ext(_frame.sprCaption, (window_has_focus() ? 1 : 0), __x, __y, __width, __height, _frame.blend, _frame.alpha);
+}
+
+function WindowFrameCaption_drawCaptionText_default(_frame, __x, __y, __width, __height) {
+	// WindowFrameCaption_drawCaptionText_default(frame:WindowFrame, _x:int, _y:int, _width:number, _height:int)
+	var _caption = _frame.caption;
+	__x += 6;
+	var _icon = _caption.icon;
+	if (_icon != -1) {
+		draw_sprite(_icon, -1, (__x + sprite_get_xoffset(_icon)), __y + ((__height - sprite_get_height(_icon)) div 2) + sprite_get_yoffset(_icon));
+		__x += 4 + sprite_get_width(_icon);
+	}
+	var _text = _caption.text;
+	if (_text == "") return 0;
+	var __newFont = _caption.font;
+	var __h = draw_get_halign();
+	var __v = draw_get_valign();
+	var __oldFont;
+	if (__newFont != -1) {
+		__oldFont = draw_get_font();
+		draw_set_font(__newFont);
+	} else __oldFont = -1;
+	draw_set_halign(0);
+	draw_set_valign(0);
+	draw_text_ext(__x, __y + ((__height - string_height_ext(_text, -1, __width)) div 2), _text, -1, __width);
+	if (__newFont != -1) draw_set_font(__oldFont);
+	draw_set_halign(__h);
+	draw_set_valign(__v);
 }
 
 #endregion
@@ -665,7 +726,7 @@ function WindowFrameCover(_frame) constructor {
 			return 0;
 		} else if (self.frame.isFullscreen) {
 			__target_rect = self.frame.getActiveMonitor()[0/* screen */];
-		} else if (self.frame.isMaximized) {
+		} else if (self.frame.__isMaximized) {
 			__target_rect = self.frame.getActiveMonitor()[1/* workspace */];
 		} else {
 			self.canIgnore = false;
@@ -685,9 +746,9 @@ function WindowFrameCover(_frame) constructor {
 			self.checkForSuccess = true;
 		}
 	}
-	self.currRect = [/* x: */0, /* y: */0, /* width: */0, /* height: */0];
+	self.currRect = _WindowFrameRect_WindowFrameRect_Impl___new();
 	self.canIgnore = false;
-	self.ignoreRect = [/* x: */0, /* y: */0, /* width: */0, /* height: */0];
+	self.ignoreRect = _WindowFrameRect_WindowFrameRect_Impl___new();
 	self.checkForSuccess = false;
 	self.frame = _frame;
 	static __class__ = mt_WindowFrameCover;
@@ -758,7 +819,7 @@ function WindowFrameDrag(_frame) constructor {
 					var __x;
 					var __y = self.my - self.top;
 					if (self.mx - self.left < (self.right - self.left) / 2) __x = min(self.mx - self.left, (self.frame.restoreRect[2/* width */] >> 1)); else __x = max(self.frame.restoreRect[2/* width */] + self.mx - self.right, (self.frame.restoreRect[2/* width */] >> 1));
-					self.frame.isMaximized = false;
+					self.frame.__isMaximized = false;
 					window_set_rectangle(__mx - __x, __my - __y, self.frame.restoreRect[2/* width */], self.frame.restoreRect[3/* height */]);
 					self.start(16);
 				}
@@ -803,6 +864,16 @@ function WindowFrameDrag(_frame) constructor {
 #endregion
 
 #region _WindowFrameRect.WindowFrameRect_Impl_
+
+function _WindowFrameRect_WindowFrameRect_Impl___new(_x, _y, _w, _h) {
+	// _WindowFrameRect_WindowFrameRect_Impl___new(...:int)->WindowFrameRect
+	if (_x == undefined) _x = 0;
+	if (_y == undefined) _y = 0;
+	if (_w == undefined) _w = 0;
+	if (_h == undefined) _h = 0;
+	if (false) show_debug_message(argument[3]);
+	return [/* x: */_x, /* y: */_y, /* width: */_w, /* height: */_h];
+}
 
 function _WindowFrameRect_WindowFrameRect_Impl__getWindowRect(_this1) {
 	// _WindowFrameRect_WindowFrameRect_Impl__getWindowRect(this:WindowFrameRectImpl)
@@ -863,8 +934,6 @@ function gml_internal_ArrayImpl_push(_arr, _val) {
 // WindowFrame:
 globalvar WindowFrame_getActiveMonitor_list; /// @is {ds_list<WindowFrameMonitorInfo>}
 WindowFrame_getActiveMonitor_list = undefined;
-// WindowFrameButton:
-globalvar WindowFrameButton_current; /// @is {WindowFrameButton}
 
 
 /// @typedef {any} WindowFrameRectImpl

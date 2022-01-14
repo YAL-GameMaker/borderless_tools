@@ -8,7 +8,7 @@ draw_text(room_width/2, room_height/2, "Your videogame here")
 draw_set_halign(_h)
 draw_set_valign(_v)
 
-draw_text(5, 30,
+draw_text(5, 35,
 	sfmt("window: %x%", frame.getWidth(), frame.getHeight())
 	+ sfmt("\nbackbuffer: %x%", browser_width, browser_height)
 	+ sfmt("\nflags: %", frame.drag.flags)

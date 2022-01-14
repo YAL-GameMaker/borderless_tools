@@ -6,38 +6,59 @@ import gml.input.MouseButton;
 import gml.input.Window;
 
 /**
- * ...
+ * A controller for window caption's buttons (by default, minimize-maximize-restore).  
+ * Found in [WindowFrame.buttons]
  * @author YellowAfterlife
+ * @dmdPath ["", "Buttons"]
+ * @dmdOrder 3
  */
-@:doc @:nativeGen @:keep
+@:nativeGen @:keep
 class WindowFrameButtons {
-	public var frame:WindowFrame;
-	public var buttons:Array<WindowFrameButton> = [];
-	public var fadeTime = 0.2;
+	/** The associated window frame controller, for convenience */
+	@:doc public var frame:WindowFrame;
+	
+	/** The buttons themselves */
+	@:doc public var array:Array<WindowFrameButton> = [];
+	
+	/** Controls how fast (in seconds) buttons fade in/out on hover */
+	@:doc public var fadeTime = 0.2;
+	
 	public var waitForMovement = new WindowFrameButtons_waitForMovement();
 	
-	public var minimize:WindowFrameButton;
-	public var maxrest:WindowFrameButton;
-	public var close:WindowFrameButton;
+	/** The default "minimize" button */
+	@:doc public var minimize:WindowFrameButton;
+	/** The default "maximize/restore" button */
+	@:doc public var maxrest:WindowFrameButton;
+	/** The default "close" button */
+	@:doc public var close:WindowFrameButton;
 	
 	public function new(frame:WindowFrame) {
 		this.frame = frame;
 	}
 	
-	public function add(button:WindowFrameButton):WindowFrameButton {
-		button.frame = frame;
-		buttons.push(button);
+	/** Adds a button to the set */
+	public inline function add(button:WindowFrameButton):WindowFrameButton {
+		array.push(button);
 		return button;
 	}
-	public function getWidth():Int {
+	
+	/** Returns combined width of all buttons */
+	@:doc public function getWidth():Int {
 		var w = 0;
-		for (button in buttons) {
-			w += button.marginLeft + button.getWidth() + button.marginRight;
+		for (button in array) {
+			w += button.marginLeft + button.getWidth(button) + button.marginRight;
 		}
 		return w;
 	}
-	public function reset() {
-		for (button in buttons) {
+	
+	/** Returns where the window buttons should be, given the specified window width */
+	@:doc public function getX(windowWidth:Int) {
+		return windowWidth - (frame.isMaximized ? 0 : frame.borderWidth) - getWidth();
+	}
+	
+	/** Un-presses and un-hovers every button */
+	@:doc public function reset() {
+		for (button in array) {
 			button.hover = false;
 			button.fade = 0.;
 			button.pressed = false;
@@ -53,12 +74,11 @@ class WindowFrameButtons {
 		var pressed = Mouse.pressed(MouseButton.MbLeft);
 		var released = Mouse.released(MouseButton.MbLeft);
 		var disable = frame.drag.flags != WindowFrameDragFlags.None || !frame.canInput;
-		for (i in 0 ... buttons.length) {
-			var button = buttons[i];
-			WindowFrameButton.current = button;
+		for (i in 0 ... array.length) {
+			var button = array[i];
 			button.update(button);
 			x += button.marginLeft;
-			var width = button.getWidth();
+			var width = button.getWidth(button);
 			if (disable || !button.enabled) {
 				button.hover = false;
 				button.pressed = false;
@@ -70,37 +90,29 @@ class WindowFrameButtons {
 			}
 			if (released && button.pressed && button.hover) {
 				button.pressed = false;
-				button.click(frame);
+				button.click(button);
 			}
 			x += width + button.marginRight;
 		}
-		WindowFrameButton.current = null;
 	}
 	public function draw(x:Int, y:Int, height:Int) {
-		for (i in 0 ... buttons.length) {
-			var button = buttons[i];
-			WindowFrameButton.current = button;
+		for (i in 0 ... array.length) {
+			var button = array[i];
 			x += button.marginLeft;
-			var width = button.getWidth();
+			var width = button.getWidth(button);
 			button.drawUnderlay(button, x, y, width, height);
 			button.drawIcon(button, x, y, width, height);
 			x += width + button.marginRight;
 		}
-		WindowFrameButton.current = null;
 	}
 	
 	public function addDefaultButtons() {
-		minimize = add(new WindowFrameButton(frame.sprButtons, 0, function(frame) {
-			frame.buttons.reset();
-			frame.delay1(frame.buttons, 1, function(buttons:WindowFrameButtons) {
-				buttons.waitForMovement.enabled = true;
-				buttons.waitForMovement.x = Window.mouseX;
-				buttons.waitForMovement.y = Window.mouseY;
-				BorderlessExt.borderless_tools_syscommand(0xF020);
-			});
+		minimize = add(new WindowFrameButton(frame, frame.sprButtons, 0, function(button) {
+			button.frame.minimize();
 		}));
 		
-		maxrest = add(new WindowFrameButton(frame.sprButtons, 1, function(frame) {
+		maxrest = add(new WindowFrameButton(frame, frame.sprButtons, 1, function(button) {
+			var frame = button.frame;
 			if (frame.isMaximized) {
 				frame.restore();
 			} else frame.maximize();
@@ -111,7 +123,7 @@ class WindowFrameButtons {
 			b.enabled = b.frame.canResize;
 		}
 		
-		close = add(new WindowFrameButton(frame.sprButtons, 3, function(frame) {
+		close = add(new WindowFrameButton(frame, frame.sprButtons, 3, function(_) {
 			Sys.exit(0);
 		}));
 		close.drawUnderlay = function(b, _x, _y, _width, _height) {
@@ -132,7 +144,7 @@ class WindowFrameButtons {
 				}
 				_alpha = frame.alpha * b.fade;//ease_inout_expo(fade, 0, 1, 1);
 			}
-			frame.sprPixel.drawStretchedExt(0, _x, _y, b.getWidth(), _height, 0x2311E8, _alpha);
+			frame.sprPixel.drawStretchedExt(0, _x, _y, b.getWidth(b), _height, 0x2311E8, _alpha);
 		}
 	}
 }

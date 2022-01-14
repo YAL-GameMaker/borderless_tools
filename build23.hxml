@@ -1,0 +1,5 @@
+shared.hxml
+-js borderless_tools_23/scripts/WindowFrameHx/WindowFrameHx.yy._
+-D sfgml_dot_static=0
+-D sfgml_version=2.3.7
+--macro DocMdAuto.proc('export/borderless_tools', 'borderless_tools_23/datafiles/borderless_tools.html')

@@ -1,0 +1,5 @@
+shared.hxml
+-js borderless_tools.gmx/extensions/borderless_tools_hx.extension.gmx._
+-D sfgml_main=window_frame_init
+-D sfgml_snake_case
+-D sf-std-package=window_frame_std

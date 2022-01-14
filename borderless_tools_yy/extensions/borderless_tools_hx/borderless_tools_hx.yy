@@ -36,40 +36,8 @@
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
                     "constantName": "window_frame_get_active_monitor_list",
-                    "hidden": false,
+                    "hidden": true,
                     "value": "g_window_frame_get_active_monitor_list"
-                },
-                {
-                    "id": "8ac52b81-76b9-5dfe-c5b3-967cfbe83975",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_spr_border",
-                    "hidden": false,
-                    "value": "0"
-                },
-                {
-                    "id": "272b03c3-cf0b-f9c5-69e6-4631f9bff7ec",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_spr_caption",
-                    "hidden": false,
-                    "value": "1"
-                },
-                {
-                    "id": "acc47831-8bad-e987-c661-fce1475df9cf",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_spr_buttons",
-                    "hidden": false,
-                    "value": "2"
-                },
-                {
-                    "id": "9537676d-47c7-851b-294e-b29c63f0fc5f",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_spr_pixel",
-                    "hidden": false,
-                    "value": "3"
                 },
                 {
                     "id": "ab8e0aff-fb9a-c6c3-0673-afc135f964b6",
@@ -77,7 +45,7 @@
                     "mvc": "1.0",
                     "constantName": "window_frame_debug",
                     "hidden": false,
-                    "value": "4"
+                    "value": "0"
                 },
                 {
                     "id": "1228067a-77c9-5a5c-a733-94835bed3af4",
@@ -85,7 +53,7 @@
                     "mvc": "1.0",
                     "constantName": "window_frame_blend",
                     "hidden": false,
-                    "value": "5"
+                    "value": "1"
                 },
                 {
                     "id": "4859c32e-e6cc-5159-31f4-bd423c090e5f",
@@ -93,15 +61,7 @@
                     "mvc": "1.0",
                     "constantName": "window_frame_alpha",
                     "hidden": false,
-                    "value": "6"
-                },
-                {
-                    "id": "83ac456f-3f98-6802-43fb-4c028165687d",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_double_click_time",
-                    "hidden": false,
-                    "value": "7"
+                    "value": "2"
                 },
                 {
                     "id": "5fe00cd8-e5b3-cae2-cc5c-aa1e52745c42",
@@ -109,7 +69,7 @@
                     "mvc": "1.0",
                     "constantName": "window_frame_mouse_over_frame",
                     "hidden": false,
-                    "value": "8"
+                    "value": "4"
                 },
                 {
                     "id": "89e88a60-99ab-6c66-763e-d02473ae2c4d",
@@ -117,7 +77,7 @@
                     "mvc": "1.0",
                     "constantName": "window_frame_can_input",
                     "hidden": false,
-                    "value": "9"
+                    "value": "5"
                 },
                 {
                     "id": "2d70a3c0-e8c2-954d-e645-ecec653a30b7",
@@ -125,47 +85,39 @@
                     "mvc": "1.0",
                     "constantName": "window_frame_can_resize",
                     "hidden": false,
+                    "value": "6"
+                },
+                {
+                    "id": "8ac52b81-76b9-5dfe-c5b3-967cfbe83975",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_spr_border",
+                    "hidden": false,
+                    "value": "7"
+                },
+                {
+                    "id": "272b03c3-cf0b-f9c5-69e6-4631f9bff7ec",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_spr_caption",
+                    "hidden": false,
+                    "value": "8"
+                },
+                {
+                    "id": "acc47831-8bad-e987-c661-fce1475df9cf",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_spr_buttons",
+                    "hidden": false,
+                    "value": "9"
+                },
+                {
+                    "id": "9537676d-47c7-851b-294e-b29c63f0fc5f",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_spr_pixel",
+                    "hidden": false,
                     "value": "10"
-                },
-                {
-                    "id": "674f873b-78cc-161b-274d-abfbe35b2121",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_titlebar_height",
-                    "hidden": false,
-                    "value": "11"
-                },
-                {
-                    "id": "8dce7edd-180d-0879-bedd-d4b77c1f6074",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_titlebar_height_maximized",
-                    "hidden": false,
-                    "value": "12"
-                },
-                {
-                    "id": "d815b9f9-2bdb-ef09-ed32-6f30ac04b0d9",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_last_title_click_at",
-                    "hidden": false,
-                    "value": "13"
-                },
-                {
-                    "id": "a91ab92b-a925-50bc-d352-55c343d4538a",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_resize_padding",
-                    "hidden": false,
-                    "value": "14"
-                },
-                {
-                    "id": "256e23e0-70b0-212e-3ad5-8e89d69b45a8",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_border_width",
-                    "hidden": false,
-                    "value": "15"
                 },
                 {
                     "id": "91b0b47f-c27d-1bec-58cb-3845f47de440",
@@ -173,71 +125,63 @@
                     "mvc": "1.0",
                     "constantName": "window_frame_buttons",
                     "hidden": false,
-                    "value": "16"
+                    "value": "11"
                 },
                 {
-                    "id": "083a3b59-894c-ee6b-8351-2c9cd0659474",
+                    "id": "a6ab0ae2-5509-36e0-050e-c0f815ddc35c",
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
-                    "constantName": "window_frame_drag",
+                    "constantName": "window_frame_caption",
+                    "hidden": false,
+                    "value": "12"
+                },
+                {
+                    "id": "abc017d4-85cd-cdc5-1e5e-4808146e31ae",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_resize_padding",
                     "hidden": false,
                     "value": "17"
                 },
                 {
-                    "id": "a334f21b-b992-724f-e711-464a475e68f7",
+                    "id": "256e23e0-70b0-212e-3ad5-8e89d69b45a8",
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
-                    "constantName": "window_frame_delay_mgr",
+                    "constantName": "window_frame_border_width",
                     "hidden": false,
                     "value": "18"
                 },
                 {
-                    "id": "7a991517-5fbe-745b-cbd5-e02d1212956c",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_cover",
-                    "hidden": false,
-                    "value": "19"
-                },
-                {
-                    "id": "0cf17120-7c0b-fc73-e51e-7937652313d2",
+                    "id": "67056612-6fe9-28b6-c060-2c74abd16cc0",
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
                     "constantName": "window_frame_default_cursor",
                     "hidden": false,
+                    "value": "19"
+                },
+                {
+                    "id": "6ba454d6-8b59-4088-59a4-0bc38620c141",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_set_cursor",
+                    "hidden": false,
                     "value": "20"
                 },
                 {
-                    "id": "cfc1bb07-2b8f-585e-b81f-7b96a0d50201",
+                    "id": "860c8723-fbdf-1586-a6fa-1b92749da5c7",
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
-                    "constantName": "window_frame_is_maximized",
+                    "constantName": "window_frame_current_cursor",
                     "hidden": false,
                     "value": "21"
                 },
                 {
-                    "id": "f3b81c24-7425-1188-451e-67722331f471",
+                    "id": "67808d62-0c81-fc83-21e8-c7982e4d971f",
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
-                    "constantName": "window_frame_is_fullscreen",
+                    "constantName": "window_frame_draw_border",
                     "hidden": false,
-                    "value": "22"
-                },
-                {
-                    "id": "675c72e3-2487-4902-f4d5-2de5a0babe3a",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_restore_rect",
-                    "hidden": false,
-                    "value": "23"
-                },
-                {
-                    "id": "ed97309b-d341-ef4b-e7b0-e4f9c763720f",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_button_current",
-                    "hidden": false,
-                    "value": "g_window_frame_button_current"
+                    "value": "25"
                 },
                 {
                     "id": "2dee4291-ec5e-ae68-0a5e-c44d3faf02cc",
@@ -248,10 +192,10 @@
                     "value": "0"
                 },
                 {
-                    "id": "ddb98146-6d52-7afe-4393-e65ba505a1a4",
+                    "id": "134bdfb6-9d00-853d-48de-fa9aa8bef85f",
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
-                    "constantName": "window_frame_button_sprite",
+                    "constantName": "window_frame_button_icon",
                     "hidden": false,
                     "value": "1"
                 },
@@ -320,6 +264,14 @@
                     "value": "9"
                 },
                 {
+                    "id": "33a1a6ed-aaef-fbc6-307b-f0dc2e2c3d5f",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_button_get_width",
+                    "hidden": false,
+                    "value": "10"
+                },
+                {
                     "id": "05d8df0c-9451-8a23-8a11-a9d705e19a01",
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
@@ -352,28 +304,20 @@
                     "value": "0"
                 },
                 {
-                    "id": "f4886a39-3540-2837-e556-9f4d60cff5c0",
+                    "id": "1b99aa19-6f3d-bf4c-3dc5-db7c76358b3b",
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
-                    "constantName": "window_frame_buttons_buttons",
+                    "constantName": "window_frame_buttons_array",
                     "hidden": false,
                     "value": "1"
                 },
                 {
-                    "id": "0388b939-6a33-debf-32fa-7a3a6c62aa87",
+                    "id": "ece70c39-8bbe-1093-ab79-3460157b0d1f",
                     "modelName": "GMExtensionConstant",
                     "mvc": "1.0",
                     "constantName": "window_frame_buttons_fade_time",
                     "hidden": false,
                     "value": "2"
-                },
-                {
-                    "id": "753b30f3-b1b7-30d1-63e3-5721c59c8a7b",
-                    "modelName": "GMExtensionConstant",
-                    "mvc": "1.0",
-                    "constantName": "window_frame_buttons_wait_for_movement",
-                    "hidden": false,
-                    "value": "3"
                 },
                 {
                     "id": "6d4d7762-7b09-7733-04c6-327ac7b8126d",
@@ -398,6 +342,70 @@
                     "constantName": "window_frame_buttons_close",
                     "hidden": false,
                     "value": "6"
+                },
+                {
+                    "id": "565c9b74-3d2a-4ab2-7a42-d370cc11d778",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_caption_frame",
+                    "hidden": false,
+                    "value": "1"
+                },
+                {
+                    "id": "c9ca9a99-600f-6444-8240-a3856757218b",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_caption_text",
+                    "hidden": false,
+                    "value": "2"
+                },
+                {
+                    "id": "f6227f5e-af7e-373d-ebc0-f64f9bad1a6b",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_caption_font",
+                    "hidden": false,
+                    "value": "3"
+                },
+                {
+                    "id": "0673e439-b022-4521-f289-09e5ed978930",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_caption_icon",
+                    "hidden": false,
+                    "value": "4"
+                },
+                {
+                    "id": "831a6fc7-1b1a-c1f9-b25b-926a8e168716",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_caption_height_normal",
+                    "hidden": false,
+                    "value": "5"
+                },
+                {
+                    "id": "83543bc3-54ea-bae5-efb9-01894235d83d",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_caption_height_maximized",
+                    "hidden": false,
+                    "value": "6"
+                },
+                {
+                    "id": "a4e0f031-74bb-9a9f-5f0d-ec169ac8fc75",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_caption_draw_background",
+                    "hidden": false,
+                    "value": "7"
+                },
+                {
+                    "id": "aa3bc5d3-6950-ab60-6bf0-db763e8acb2e",
+                    "modelName": "GMExtensionConstant",
+                    "mvc": "1.0",
+                    "constantName": "window_frame_caption_draw_text",
+                    "hidden": false,
+                    "value": "8"
                 }
             ],
             "copyToTargets": -1,
@@ -435,25 +443,48 @@
                     "returnType": 2
                 },
                 {
-                    "id": "5dee92cf-eef3-00b2-7338-b388ea7d9411",
+                    "id": "c5c434d1-b8ad-2780-56df-935f65e56740",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 8,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2,
-                        2,
-                        2,
-                        2,
-                        2,
-                        2,
-                        2
+                        
                     ],
-                    "externalName": "window_frame_draw9slice",
-                    "help": "window_frame_draw9slice(spr:sprite, subimg:int, x:int, y:int, w:int, h:int, c:int, a:number)",
-                    "hidden": false,
+                    "externalName": "window_frame_draw_border_default",
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
-                    "name": "window_frame_draw9slice",
+                    "name": "window_frame_draw_border_default",
+                    "returnType": 2
+                },
+                {
+                    "id": "72751ee7-0d62-5edc-6428-fc9a17478aef",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_minimize_lf",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_minimize_lf",
+                    "returnType": 2
+                },
+                {
+                    "id": "df9d5999-7a4d-26a2-8046-0a2065850512",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_minimise_lf",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_minimise_lf",
                     "returnType": 2
                 },
                 {
@@ -472,48 +503,63 @@
                     "returnType": 2
                 },
                 {
-                    "id": "93feddf0-20d7-132c-a48f-d538454d7120",
+                    "id": "77552bee-1544-e2e4-a049-864a1686e38f",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": -1,
                     "args": [
                         
                     ],
-                    "externalName": "window_frame_set_fullscreen_lf",
+                    "externalName": "window_frame_set_fullscreen_1_lf",
                     "help": "",
                     "hidden": true,
                     "kind": 2,
-                    "name": "window_frame_set_fullscreen_lf",
+                    "name": "window_frame_set_fullscreen_1_lf",
                     "returnType": 2
                 },
                 {
-                    "id": "7594da5e-5ce2-6ca6-5f68-64c0075a7215",
+                    "id": "7e53daca-0bfe-bd17-ebcb-6e562b670119",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": -1,
                     "args": [
                         
                     ],
-                    "externalName": "window_frame_set_fullscreen_lf1",
+                    "externalName": "window_frame_set_fullscreen_1_lf1",
                     "help": "",
                     "hidden": true,
                     "kind": 2,
-                    "name": "window_frame_set_fullscreen_lf1",
+                    "name": "window_frame_set_fullscreen_1_lf1",
                     "returnType": 2
                 },
                 {
-                    "id": "1ed7905f-3b33-d083-9539-eb6453ceb255",
+                    "id": "02ceabc9-2662-108a-7d66-8d205e8a369e",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": -1,
                     "args": [
                         
                     ],
-                    "externalName": "window_frame_set_fullscreen_lf2",
+                    "externalName": "window_frame_set_fullscreen_1_lf2",
                     "help": "",
                     "hidden": true,
                     "kind": 2,
-                    "name": "window_frame_set_fullscreen_lf2",
+                    "name": "window_frame_set_fullscreen_1_lf2",
+                    "returnType": 2
+                },
+                {
+                    "id": "f8ae2313-a71e-e945-acee-18aa3f18bb5b",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_new_lf",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_new_lf",
                     "returnType": 2
                 },
                 {
@@ -535,14 +581,13 @@
                     "id": "870650b0-d89d-f6d8-e519-2467c0f8c8bc",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 2,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_mylog",
-                    "help": "window_frame_mylog(this:window_frame, args:haxe_Rest<any>)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_mylog",
                     "returnType": 2
@@ -551,15 +596,13 @@
                     "id": "985eaef6-2a97-e3c1-dce6-b76991c2ab91",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 3,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_delay0",
-                    "help": "window_frame_delay0(this:window_frame, func:function<void>, delay:int)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_delay0",
                     "returnType": 2
@@ -568,16 +611,13 @@
                     "id": "9b0377e9-cc24-163c-99dc-bb300b3f3543",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 4,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2,
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_delay1",
-                    "help": "window_frame_delay1(this:window_frame, arg:A, delay:int, func:function<A; void>)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_delay1",
                     "returnType": 2
@@ -586,17 +626,13 @@
                     "id": "56e8e4ff-03ef-5bd1-a70f-02bb5bdcfe48",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 5,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2,
-                        2,
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_delay2",
-                    "help": "window_frame_delay2(this:window_frame, arg:A, arg:B, delay:int, func:function<A; B; void>)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_delay2",
                     "returnType": 2
@@ -610,8 +646,8 @@
                         
                     ],
                     "externalName": "window_frame_delay3",
-                    "help": "window_frame_delay3(this:window_frame, func:function<A; B; C; void>, delay:int, ?arg:A, ?arg:B, ?arg:C)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_delay3",
                     "returnType": 2
@@ -625,41 +661,85 @@
                         
                     ],
                     "externalName": "window_frame_delay4",
-                    "help": "window_frame_delay4(this:window_frame, func:function<A; B; C; D; void>, delay:int, ?arg:A, ?arg:B, ?arg:C, ?arg:D)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_delay4",
-                    "returnType": 2
-                },
-                {
-                    "id": "24bf2e27-7554-f02c-fc4b-35b6958b0b19",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 2,
-                    "args": [
-                        2,
-                        2
-                    ],
-                    "externalName": "window_frame_get_buttons_x",
-                    "help": "window_frame_get_buttons_x(this:window_frame, _width:int)->int",
-                    "hidden": false,
-                    "kind": 2,
-                    "name": "window_frame_get_buttons_x",
                     "returnType": 2
                 },
                 {
                     "id": "d5f3611b-dbdb-0052-8d44-da5bb8413b7b",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_get_active_monitor",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_get_active_monitor",
+                    "returnType": 2
+                },
+                {
+                    "id": "e2db2518-5c5d-7084-3c47-7b7004b624c7",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
                     "argCount": 1,
                     "args": [
                         2
                     ],
-                    "externalName": "window_frame_get_active_monitor",
-                    "help": "window_frame_get_active_monitor(this:window_frame)->WindowFrameMonitorInfo",
+                    "externalName": "window_frame_minimize",
+                    "help": "window_frame_minimize(this:window_frame)",
                     "hidden": false,
                     "kind": 2,
-                    "name": "window_frame_get_active_monitor",
+                    "name": "window_frame_minimize",
+                    "returnType": 2
+                },
+                {
+                    "id": "d05f7bf8-8a7f-387d-a1fd-5ae269679d00",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_minimise",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_minimise",
+                    "returnType": 2
+                },
+                {
+                    "id": "1538aa97-b09f-4be1-c7b0-4a99ba25be24",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": 1,
+                    "args": [
+                        2
+                    ],
+                    "externalName": "window_frame_is_minimized",
+                    "help": "window_frame_is_minimized(this:window_frame)->any\/\/ * Returns whether the window is currently minimized.",
+                    "hidden": false,
+                    "kind": 2,
+                    "name": "window_frame_is_minimized",
+                    "returnType": 2
+                },
+                {
+                    "id": "57d96d47-d9dd-2456-7463-ac86730f82c9",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_is_minimised",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_is_minimised",
                     "returnType": 2
                 },
                 {
@@ -671,23 +751,68 @@
                         2
                     ],
                     "externalName": "window_frame_maximize",
-                    "help": "window_frame_maximize(this:window_frame)",
+                    "help": "window_frame_maximize(this:window_frame)\/\/ * Maximizes the window (much like pressing the button would)",
                     "hidden": false,
                     "kind": 2,
                     "name": "window_frame_maximize",
                     "returnType": 2
                 },
                 {
-                    "id": "bec46e5f-9bbd-10da-1a80-554aae3f4e16",
+                    "id": "eab1d832-ed62-ea2f-9281-e551486e9e90",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_maximise",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_maximise",
+                    "returnType": 2
+                },
+                {
+                    "id": "dabe3987-7596-c38c-6f63-3ef078facd78",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": 1,
                     "args": [
                         2
                     ],
-                    "externalName": "window_frame_maximize_1",
-                    "help": "window_frame_maximize_1(this:window_frame)",
+                    "externalName": "window_frame_is_maximized",
+                    "help": "window_frame_is_maximized(this:window_frame)->bool\/\/ * Returns whether the window is currently maximized.",
                     "hidden": false,
+                    "kind": 2,
+                    "name": "window_frame_is_maximized",
+                    "returnType": 2
+                },
+                {
+                    "id": "3d3a4843-5495-d5a1-9e1b-8bde8c1d4c72",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_is_maximised",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_is_maximised",
+                    "returnType": 2
+                },
+                {
+                    "id": "bec46e5f-9bbd-10da-1a80-554aae3f4e16",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_maximize_1",
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_maximize_1",
                     "returnType": 2
@@ -696,13 +821,13 @@
                     "id": "6d77e85e-d456-f2de-8dbf-ec49eb9e277a",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 1,
+                    "argCount": -1,
                     "args": [
-                        2
+                        
                     ],
                     "externalName": "window_frame_store_rect",
-                    "help": "window_frame_store_rect(this:window_frame)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_store_rect",
                     "returnType": 2
@@ -716,7 +841,7 @@
                         
                     ],
                     "externalName": "window_frame_restore",
-                    "help": "window_frame_restore(this:window_frame, _force:bool = false)",
+                    "help": "window_frame_restore(this:window_frame, _force:bool = false)\/\/ * Restores the window to non-maximized, non-full-screen state.",
                     "hidden": false,
                     "kind": 2,
                     "name": "window_frame_restore",
@@ -726,29 +851,59 @@
                     "id": "89e35757-dc68-4229-d5cb-aa249f3c3909",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": -1,
+                    "argCount": 2,
                     "args": [
-                        
+                        2,
+                        2
                     ],
                     "externalName": "window_frame_set_fullscreen",
-                    "help": "window_frame_set_fullscreen(this:window_frame, _mode:int, _wasFullscreen:bool = false)",
+                    "help": "window_frame_set_fullscreen(this:window_frame, mode:int)",
                     "hidden": false,
                     "kind": 2,
                     "name": "window_frame_set_fullscreen",
                     "returnType": 2
                 },
                 {
+                    "id": "0b00cc55-dea9-ff79-88d1-182858bc2ee8",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": 1,
+                    "args": [
+                        2
+                    ],
+                    "externalName": "window_frame_get_fullscreen",
+                    "help": "window_frame_get_fullscreen(this:window_frame)->int\/\/ Returns the current fullscreen mode",
+                    "hidden": false,
+                    "kind": 2,
+                    "name": "window_frame_get_fullscreen",
+                    "returnType": 2
+                },
+                {
+                    "id": "752bb110-5bb9-268a-d981-2fe43a0fcff7",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_set_fullscreen_1",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_set_fullscreen_1",
+                    "returnType": 2
+                },
+                {
                     "id": "dbd00671-e319-6c34-1bc1-773cd723cf90",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 2,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_set_window_cursor",
-                    "help": "window_frame_set_window_cursor(this:window_frame, cr:cr)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_set_window_cursor",
                     "returnType": 2
@@ -757,43 +912,28 @@
                     "id": "d9297143-b08b-d1ad-7f07-7788b7d0c949",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 1,
+                    "argCount": -1,
                     "args": [
-                        2
+                        
                     ],
                     "externalName": "window_frame_get_border_width",
-                    "help": "window_frame_get_border_width(this:window_frame)->int",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_get_border_width",
-                    "returnType": 2
-                },
-                {
-                    "id": "cbc9cdf5-b6ef-b3d4-9b1a-9303364499b7",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 1,
-                    "args": [
-                        2
-                    ],
-                    "externalName": "window_frame_get_titlebar_height",
-                    "help": "window_frame_get_titlebar_height(this:window_frame)->int",
-                    "hidden": false,
-                    "kind": 2,
-                    "name": "window_frame_get_titlebar_height",
                     "returnType": 2
                 },
                 {
                     "id": "b661d53d-87ac-1e1e-cd6d-91c67c79cd29",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 1,
+                    "argCount": -1,
                     "args": [
-                        2
+                        
                     ],
                     "externalName": "window_frame_get_width",
-                    "help": "window_frame_get_width(this:window_frame)->int",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_get_width",
                     "returnType": 2
@@ -802,15 +942,30 @@
                     "id": "358f4ba3-4351-fe4b-e2c2-8c650073e23e",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_get_height",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_get_height",
+                    "returnType": 2
+                },
+                {
+                    "id": "ca3b7ae6-13a7-3abe-f080-2dabd131369c",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
                     "argCount": 1,
                     "args": [
                         2
                     ],
-                    "externalName": "window_frame_get_height",
-                    "help": "window_frame_get_height(this:window_frame)->int",
+                    "externalName": "window_frame_get_drag_flags",
+                    "help": "window_frame_get_drag_flags(this:window_frame)->int\/\/ This returns a non-zero value if a move\/resize operation is underway",
                     "hidden": false,
                     "kind": 2,
-                    "name": "window_frame_get_height",
+                    "name": "window_frame_get_drag_flags",
                     "returnType": 2
                 },
                 {
@@ -829,64 +984,6 @@
                     "returnType": 2
                 },
                 {
-                    "id": "8c33a7b8-8603-4b0a-f32a-7d2b675f4369",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 5,
-                    "args": [
-                        2,
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
-                    "externalName": "window_frame_draw_border",
-                    "help": "window_frame_draw_border(this:window_frame, _x:int, _y:int, _width:int, _height:int)",
-                    "hidden": false,
-                    "kind": 2,
-                    "name": "window_frame_draw_border",
-                    "returnType": 2
-                },
-                {
-                    "id": "4d9ea072-d386-7a39-a2aa-1a56a96e065b",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 6,
-                    "args": [
-                        2,
-                        2,
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
-                    "externalName": "window_frame_draw_caption_rect",
-                    "help": "window_frame_draw_caption_rect(this:window_frame, _x:int, _y:int, _width:int, _height:int, _buttons_x:int)",
-                    "hidden": false,
-                    "kind": 2,
-                    "name": "window_frame_draw_caption_rect",
-                    "returnType": 2
-                },
-                {
-                    "id": "ed8ba3b6-c838-1824-bff2-4ddda70ec240",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 5,
-                    "args": [
-                        2,
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
-                    "externalName": "window_frame_draw_caption_text",
-                    "help": "window_frame_draw_caption_text(this:window_frame, _x:int, _y:int, _width:number, _height:number)",
-                    "hidden": false,
-                    "kind": 2,
-                    "name": "window_frame_draw_caption_text",
-                    "returnType": 2
-                },
-                {
                     "id": "6bf60cd7-89a1-e92a-fdde-4aac5e3c4fac",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
@@ -902,53 +999,46 @@
                     "returnType": 2
                 },
                 {
-                    "id": "ca3b7ae6-13a7-3abe-f080-2dabd131369c",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 1,
-                    "args": [
-                        2
-                    ],
-                    "externalName": "window_frame_get_drag_flags",
-                    "help": "window_frame_get_drag_flags(this:window_frame)->int",
-                    "hidden": false,
-                    "kind": 2,
-                    "name": "window_frame_get_drag_flags",
-                    "returnType": 2
-                },
-                {
                     "id": "b92d63e4-f79f-427b-723d-a297381822c6",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 4,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2,
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_button_ease_inout_expo",
-                    "help": "window_frame_button_ease_inout_expo(argument:number, argument:number, argument:number, argument:number)->number",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_button_ease_inout_expo",
+                    "returnType": 2
+                },
+                {
+                    "id": "3ac6a2f8-c628-7184-cf1d-7761951282c0",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_button_get_width_default",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_button_get_width_default",
                     "returnType": 2
                 },
                 {
                     "id": "b1794c6a-a427-7d6e-33cf-cf3d8b248bce",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 5,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2,
-                        2,
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_button_draw_underlay_default",
-                    "help": "window_frame_button_draw_underlay_default(b:window_frame_button, _x:number, _y:number, _width:number, _height:number)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_button_draw_underlay_default",
                     "returnType": 2
@@ -957,17 +1047,13 @@
                     "id": "166055eb-8ff9-c57c-1de0-c09286b3fb74",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 5,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2,
-                        2,
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_button_draw_icon_default",
-                    "help": "window_frame_button_draw_icon_default(b:window_frame_button, x:int, y:int, width:int, height:int)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_button_draw_icon_default",
                     "returnType": 2
@@ -991,47 +1077,18 @@
                     "id": "552e106d-360a-9c01-17a2-3c7964b8b16a",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 3,
+                    "argCount": 4,
                     "args": [
+                        2,
                         2,
                         2,
                         2
                     ],
                     "externalName": "window_frame_button_create",
-                    "help": "window_frame_button_create(sprite:sprite, subimg:int, onClick:function<window_frame; void>)->window_frame_button",
+                    "help": "window_frame_button_create(frame:window_frame, icon:sprite, subimg:int, onClick:function<button:window_frame_button; void>)->window_frame_button",
                     "hidden": false,
                     "kind": 2,
                     "name": "window_frame_button_create",
-                    "returnType": 2
-                },
-                {
-                    "id": "cef9eef6-32fc-88fa-44c8-bad661547531",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": 1,
-                    "args": [
-                        2
-                    ],
-                    "externalName": "window_frame_button_get_width",
-                    "help": "window_frame_button_get_width(this:window_frame_button)->int",
-                    "hidden": false,
-                    "kind": 2,
-                    "name": "window_frame_button_get_width",
-                    "returnType": 2
-                },
-                {
-                    "id": "388ea260-688f-c4f1-ccc4-3e3a36600ed3",
-                    "modelName": "GMExtensionFunction",
-                    "mvc": "1.0",
-                    "argCount": -1,
-                    "args": [
-                        
-                    ],
-                    "externalName": "window_frame_buttons_add_default_buttons_lf1",
-                    "help": "",
-                    "hidden": true,
-                    "kind": 2,
-                    "name": "window_frame_buttons_add_default_buttons_lf1",
                     "returnType": 2
                 },
                 {
@@ -1050,18 +1107,18 @@
                     "returnType": 2
                 },
                 {
-                    "id": "c1152e92-9b29-d30f-e0f0-50f47c9cd9ae",
+                    "id": "388ea260-688f-c4f1-ccc4-3e3a36600ed3",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": -1,
                     "args": [
                         
                     ],
-                    "externalName": "window_frame_buttons_add_default_buttons_lf2",
+                    "externalName": "window_frame_buttons_add_default_buttons_lf1",
                     "help": "",
                     "hidden": true,
                     "kind": 2,
-                    "name": "window_frame_buttons_add_default_buttons_lf2",
+                    "name": "window_frame_buttons_add_default_buttons_lf1",
                     "returnType": 2
                 },
                 {
@@ -1080,18 +1137,18 @@
                     "returnType": 2
                 },
                 {
-                    "id": "6af65ce7-3385-3ba7-24db-d3443c17503b",
+                    "id": "c1152e92-9b29-d30f-e0f0-50f47c9cd9ae",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
                     "argCount": -1,
                     "args": [
                         
                     ],
-                    "externalName": "window_frame_buttons_add_default_buttons_lf3",
+                    "externalName": "window_frame_buttons_add_default_buttons_lf2",
                     "help": "",
                     "hidden": true,
                     "kind": 2,
-                    "name": "window_frame_buttons_add_default_buttons_lf3",
+                    "name": "window_frame_buttons_add_default_buttons_lf2",
                     "returnType": 2
                 },
                 {
@@ -1113,13 +1170,13 @@
                     "id": "eff0cb4c-d96d-f299-7302-83304082a66b",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 1,
+                    "argCount": -1,
                     "args": [
-                        2
+                        
                     ],
                     "externalName": "window_frame_buttons_create",
-                    "help": "window_frame_buttons_create(frame:window_frame)->window_frame_buttons",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_buttons_create",
                     "returnType": 2
@@ -1128,14 +1185,13 @@
                     "id": "49e10066-fbb6-3d58-075e-c25c6763a655",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 2,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_buttons_add",
-                    "help": "window_frame_buttons_add(this:window_frame_buttons, button:window_frame_button)->window_frame_button",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_buttons_add",
                     "returnType": 2
@@ -1149,10 +1205,26 @@
                         2
                     ],
                     "externalName": "window_frame_buttons_get_width",
-                    "help": "window_frame_buttons_get_width(this:window_frame_buttons)->int",
+                    "help": "window_frame_buttons_get_width(this:window_frame_buttons)->int\/\/ Returns combined width of all buttons",
                     "hidden": false,
                     "kind": 2,
                     "name": "window_frame_buttons_get_width",
+                    "returnType": 2
+                },
+                {
+                    "id": "42542e22-15b1-9fa9-66ef-520fc30352ae",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": 2,
+                    "args": [
+                        2,
+                        2
+                    ],
+                    "externalName": "window_frame_buttons_get_x",
+                    "help": "window_frame_buttons_get_x(this:window_frame_buttons, windowWidth:int)->int\/\/ Returns where the window buttons should be, given the specified window width",
+                    "hidden": false,
+                    "kind": 2,
+                    "name": "window_frame_buttons_get_x",
                     "returnType": 2
                 },
                 {
@@ -1164,7 +1236,7 @@
                         2
                     ],
                     "externalName": "window_frame_buttons_reset",
-                    "help": "window_frame_buttons_reset(this:window_frame_buttons)",
+                    "help": "window_frame_buttons_reset(this:window_frame_buttons)\/\/ Un-presses and un-hovers every button",
                     "hidden": false,
                     "kind": 2,
                     "name": "window_frame_buttons_reset",
@@ -1174,18 +1246,13 @@
                     "id": "a5c2eb1b-37b6-c342-880a-e6c9d239c92c",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 6,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2,
-                        2,
-                        2,
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_buttons_update",
-                    "help": "window_frame_buttons_update(this:window_frame_buttons, x:int, y:int, height:int, mx:int, my:int)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_buttons_update",
                     "returnType": 2
@@ -1194,16 +1261,13 @@
                     "id": "60e301b4-a210-2519-3302-b420f80b54d6",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 4,
+                    "argCount": -1,
                     "args": [
-                        2,
-                        2,
-                        2,
-                        2
+                        
                     ],
                     "externalName": "window_frame_buttons_draw",
-                    "help": "window_frame_buttons_draw(this:window_frame_buttons, x:int, y:int, height:int)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_buttons_draw",
                     "returnType": 2
@@ -1212,13 +1276,13 @@
                     "id": "53d7979b-d75e-dba1-7b5d-28eb512dc917",
                     "modelName": "GMExtensionFunction",
                     "mvc": "1.0",
-                    "argCount": 1,
+                    "argCount": -1,
                     "args": [
-                        2
+                        
                     ],
                     "externalName": "window_frame_buttons_add_default_buttons",
-                    "help": "window_frame_buttons_add_default_buttons(this:window_frame_buttons)",
-                    "hidden": false,
+                    "help": "",
+                    "hidden": true,
                     "kind": 2,
                     "name": "window_frame_buttons_add_default_buttons",
                     "returnType": 2
@@ -1236,6 +1300,66 @@
                     "hidden": true,
                     "kind": 2,
                     "name": "window_frame_buttons_wait_for_movement_create",
+                    "returnType": 2
+                },
+                {
+                    "id": "dc6c9bc7-d415-337f-e343-c8a44aa4ea18",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_caption_draw_caption_rect_default",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_caption_draw_caption_rect_default",
+                    "returnType": 2
+                },
+                {
+                    "id": "73cb167e-0423-f56e-dd5c-47d9eff6d67d",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_caption_draw_caption_text_default",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_caption_draw_caption_text_default",
+                    "returnType": 2
+                },
+                {
+                    "id": "819ef46d-c99a-49a4-5fd4-b4a5e8e97a51",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_caption_create",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_caption_create",
+                    "returnType": 2
+                },
+                {
+                    "id": "3440afa2-7727-3f8e-5475-1745b64e363a",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": 1,
+                    "args": [
+                        2
+                    ],
+                    "externalName": "window_frame_caption_get_height",
+                    "help": "window_frame_caption_get_height(this:window_frame_caption)->int\/\/ Returns current height (depending on whether the window is maximized)",
+                    "hidden": false,
+                    "kind": 2,
+                    "name": "window_frame_caption_get_height",
                     "returnType": 2
                 },
                 {
@@ -1371,6 +1495,21 @@
                     "hidden": true,
                     "kind": 2,
                     "name": "window_frame_drag_update",
+                    "returnType": 2
+                },
+                {
+                    "id": "92394f4b-159d-efd9-0609-abc209756f3a",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": -1,
+                    "args": [
+                        
+                    ],
+                    "externalName": "window_frame_helpers_draw9slice",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 2,
+                    "name": "window_frame_helpers_draw9slice",
                     "returnType": 2
                 },
                 {

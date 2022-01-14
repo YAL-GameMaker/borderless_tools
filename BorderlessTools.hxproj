@@ -19,21 +19,23 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="sfgml_dot_static=false" />
+    <option directives="sfgml_dot_static=false&#xA;sfgml.modern&#xA;sfgml_version=2.3.7" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
-    <option mainClass="Main" />
+    <option mainClass="WindowFrame" />
     <option enabledebug="False" />
-    <option additional="-dce full" />
+    <option additional="-dce full&#xA;--macro DocMdAuto.proc('export/borderless_tools', 'borderless_tools_23/datafiles/borderless_tools.html')" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
     <library name="sfhx" />
     <library name="sfgml" />
+    <library name="hscript" />
+    <library name="docmd" />
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\Main.hx" />
+    <compile path="src\WindowFrame.hx" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

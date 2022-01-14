@@ -29,7 +29,12 @@ public:
 	void push_back(T value) {
 		if (_size >= _capacity) {
 			_capacity *= 2;
-			_data = (T*)realloc(_data, _capacity);
+			auto nd = (T*)realloc(_data, sizeof(T) * _capacity);
+			if (nd == nullptr) {
+				trace("Failed to reallocate %d bytes!", sizeof(T) * _capacity);
+				return;
+			}
+			_data = nd;
 		}
 		_data[_size++] = value;
 	}
@@ -50,7 +55,10 @@ dllx void borderless_tools_set_shadow(double _enable) {
 	auto pad = enable ? 1 : 0;
 	MARGINS m{ pad, pad, pad, pad };
 	DwmExtendFrameIntoClientArea(hwnd, &m);
-	SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) | WS_CAPTION);
+	auto style = GetWindowLong(hwnd, GWL_STYLE);
+	//trace("style=%x exstyle=%x", style, GetWindowLong(hwnd, GWL_EXSTYLE));
+	style |= WS_CAPTION; // WS_CAPTION
+	SetWindowLong(hwnd, GWL_STYLE, style);
 	SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED);
 	//trace("shadow: %d", enable);
 }
@@ -95,8 +103,10 @@ dllx void borderless_tools_init_raw(void* _hwnd) {
 	hwnd_tme.dwHoverTime = 1;
 	TrackMouseEvent(&hwnd_tme);
 	window_command_proc_base = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)window_command_proc_hook);
-	SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) | WS_CAPTION);
-	borderless_tools_set_shadow(true);
+	//auto style = GetWindowLong(hwnd, GWL_STYLE);
+	//style |= WS_CAPTION;
+	//SetWindowLong(hwnd, GWL_STYLE, style);
+	//borderless_tools_set_shadow(true);
 }
 
 dllx void borderless_tools_syscommand(double _sc) {
@@ -150,6 +160,10 @@ dllx double borderless_tools_get_monitors_2(borderless_tools_get_monitors_t* out
 
 dllx double borderless_tools_double_click_time() {
 	return GetDoubleClickTime();
+}
+
+dllx double borderless_tools_is_minimized() {
+	return IsIconic(hwnd) ? 1 : 0;
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {

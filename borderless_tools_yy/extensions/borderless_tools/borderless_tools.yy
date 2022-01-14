@@ -148,6 +148,21 @@
                     "kind": 11,
                     "name": "borderless_tools_double_click_time",
                     "returnType": 2
+                },
+                {
+                    "id": "3c2c3177-919f-4a3e-8ea4-da6e571711c1",
+                    "modelName": "GMExtensionFunction",
+                    "mvc": "1.0",
+                    "argCount": 0,
+                    "args": [
+                        
+                    ],
+                    "externalName": "borderless_tools_is_minimized",
+                    "help": "",
+                    "hidden": true,
+                    "kind": 11,
+                    "name": "borderless_tools_is_minimized",
+                    "returnType": 2
                 }
             ],
             "init": "",

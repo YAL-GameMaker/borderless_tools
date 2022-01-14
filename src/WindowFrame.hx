@@ -2,6 +2,7 @@ package ;
 import gml.Draw;
 import gml.Mathf;
 import gml.Syntax;
+import gml.assets.Font;
 import gml.assets.Sprite;
 import gml.ds.ArrayList;
 import gml.ds.Color;
@@ -13,52 +14,99 @@ import gml.input.Mouse;
 import gml.input.MouseButton;
 import gml.input.Window;
 import gml.input.Window.WindowCursor;
+import WindowFrameHelpers.*;
 import haxe.Rest;
 
 /**
- * ...
+ * Represents a window frame itself
  * @author YellowAfterlife
+ * @dmdPath ["", "Frame"]
+ * @dmdOrder 1
  */
 @:doc @:nativeGen @:keep
 class WindowFrame {
+	/**
+	 * @dmdPrefix Essentials:
+	 * If enabled, logs semi-important events.
+	 */
+	public var debug = false;
+	
+	/** Can be set to quickly apply color blending to default elements */
+	public var blend = Color.white;
+	/** Can be set to quickly apply an alpha multiplier to default elements */
+	public var alpha = 1.;
+	@:noDoc public var doubleClickTime = BorderlessExt.borderless_tools_double_click_time();
+	/** Can be read to figure out whether the mouse is currently over the border/titlebar - you should not be handling mouse press events when it is */
+	public var mouseOverFrame = false;
+	
+	/**
+	 * Can be set to `false` to disable all input polling.
+	 * A common use case is to fade out the frame (using [alpha]) and disable polling
+	 * when your game is in "play" state to avoid dealing with window border UI.
+	 */
+	public var canInput = true;
+	/** Can be set to `false` to disable resizing and maximize/restore button */
+	public var canResize = true;
+	
+	/**
+	 * @dmdPrefix Sprites:
+	 * Outer window border (9-slice, 2 frames - inactive, active)
+	 */
 	public var sprBorder:Sprite;
+	/** Window caption (9-slice, 2 frames - inactive, active) */
 	public var sprCaption:Sprite;
+	/** Window button icons (4 frames - minimize, maximize, restore, close) */
 	public var sprButtons:Sprite;
+	/** A white square to be stretched when drawing colored rectangles */
 	public var sprPixel:Sprite;
 	
-	public var debug = false;
-	public function mylog(args:Rest<Any>) {
+	@:noDoc public function mylog(args:Rest<Any>) {
 		if (!debug) return;
 		var s = "[WindowFrame] ";
 		for (arg in args) s += Std.string(arg);
 		gml.Lib.trace(s);
 	}
 	
-	public var blend = Color.white;
-	public var alpha = 1.;
-	public var doubleClickTime = BorderlessExt.borderless_tools_double_click_time();
-	public var mouseOverFrame = false;
+	/**
+	 * @dmdPrefix Controllers:
+	 * A reference to the window button controller ([WindowFrameButtons])
+	 */
+	public var buttons:WindowFrameButtons;
+	/** A reference to the window caption controller ([WindowFrameCaption]) */
+	public var caption:WindowFrameCaption;
+	@:noDoc public var drag:WindowFrameDrag;
+	@:noDoc public var delayMgr:WindowFrameDelay;
+	@:noDoc public var cover:WindowFrameCover;
 	
-	public var canInput = true;
-	public var canResize = true;
-	
-	public var titlebarHeight:Int;
-	public var titlebarHeightMaximized = 21;
-	
-	public var lastTitleClickAt = -5000;
+	@:noDoc public var lastTitleClickAt = -5000;
+	/** Clicking this close (in pixels) to the window edge initiates the resize operation, if enabled */
 	public var resizePadding = 6;
+	/** Effective width of window border, used for deciding where to draw the window buttons */
 	public var borderWidth = 2;
 	
-	public var buttons:WindowFrameButtons;
-	public var drag:WindowFrameDrag;
-	public var delayMgr:WindowFrameDelay;
-	public var cover:WindowFrameCover;
-	
+	/**
+	 * @dmdPrefix Cursor-related:
+	 * The cursor to use while the mouse isn't over the window border.  
+	 * Defaults to `cr_arrow`
+	 */
 	public var defaultCursor:WindowCursor = WindowCursor.arrow;
-	public var isMaximized = false;
-	public var isFullscreen = false;
-	public var restoreRect = new WindowFrameRect();
+	/** If set to false, the extension will not try changing the cursor at all */
+	public var setCursor:Bool = true;
+	/**
+	 * If [setCursor] is false, you can read this to see what cursor the extension wanted to show
+	 * and show your own.
+	 */
+	public var currentCursor:WindowCursor = WindowCursor.arrow;
 	
+	/**
+	 * Initializes the extension context.  
+	 * If not provided, sprites are assumed to be --{
+	 * - `spr_window_border` 
+	 * - `spr_window_caption`
+	 * - `spr_window_buttons`
+	 * - `spr_window_pixel`
+	 * }
+	 */
 	public function new(
 		?sprBorder:Sprite,
 		?sprCaption:Sprite,
@@ -75,37 +123,42 @@ class WindowFrame {
 		this.sprButtons = sprButtons;
 		this.sprPixel = sprPixel;
 		
-		titlebarHeight = sprCaption.height;
+		caption = new WindowFrameCaption(this);
 		drag = new WindowFrameDrag(this);
 		delayMgr = new WindowFrameDelay();
 		cover = new WindowFrameCover(this);
 		restoreRect.getWindowRect();
 		buttons = new WindowFrameButtons(this);
 		buttons.addDefaultButtons();
+		
+		#if sfgml.next
+		BorderlessExt.borderless_tools_set_shadow(true);
+		#else
+		delay1(this, 3, (frame:WindowFrame) -> {
+			if (frame.isMaximized || frame.isFullscreen || Window.fullscreen) return;
+			BorderlessExt.borderless_tools_set_shadow(true);
+		});
+		#end
 	}
 	
-	public inline function delay0(func:()->Void, delay:Int) {
+	@:noDoc public inline function delay0(func:()->Void, delay:Int) {
 		delayMgr.add(func, delay);
 	}
-	public inline function delay1<A>(arg0:A, delay:Int, func:A->Void) {
+	@:noDoc public inline function delay1<A>(arg0:A, delay:Int, func:A->Void) {
 		delayMgr.add(func, delay, arg0);
 	}
-	public inline function delay2<A,B>(arg0:A, arg1:B, delay:Int, func:A->B->Void) {
+	@:noDoc public inline function delay2<A,B>(arg0:A, arg1:B, delay:Int, func:A->B->Void) {
 		delayMgr.add(func, delay, arg0, arg1);
 	}
-	public inline function delay3<A,B,C>(func:A->B->C->Void, delay:Int, ?arg0:A, ?arg1:B, ?arg2:C) {
+	@:noDoc public inline function delay3<A,B,C>(func:A->B->C->Void, delay:Int, ?arg0:A, ?arg1:B, ?arg2:C) {
 		delayMgr.add(func, delay, arg0, arg1, arg2);
 	}
-	public inline function delay4<A,B,C,D>(func:A->B->C->D->Void, delay:Int, ?arg0:A, ?arg1:B, ?arg2:C, ?arg3:D) {
+	@:noDoc public inline function delay4<A,B,C,D>(func:A->B->C->D->Void, delay:Int, ?arg0:A, ?arg1:B, ?arg2:C, ?arg3:D) {
 		delayMgr.add(func, delay, arg0, arg1, arg2, arg3);
 	}
 	
-	public function getButtonsX(_width:Int) {
-		return (isMaximized ? _width : _width - borderWidth) - buttons.getWidth();
-	}
-	
-	static var getActiveMonitor_list:ArrayList<WindowFrameMonitorInfo> = null;
-	public function getActiveMonitor():WindowFrameMonitorInfo {
+	@:noDoc static var getActiveMonitor_list:ArrayList<WindowFrameMonitorInfo> = null;
+	@:noDoc public function getActiveMonitor():WindowFrameMonitorInfo {
 		var _list = getActiveMonitor_list;
 		if (_list == null) {
 			_list = new ArrayList();
@@ -131,22 +184,74 @@ class WindowFrame {
 		return _item;
 	}
 	
+	@:noDoc @:native("__isMaximized") public var isMaximized = false;
+	/** Whether the window is currently in borderless fullscreen mode */
+	@:noDoc public var isFullscreen = false;
+	@:noDoc public var restoreRect = new WindowFrameRect();
+	
+	/**
+	 * @dmdPrefix State management:
+	 * Minimizes the window.
+	 */
+	public function minimize() {
+		if (BorderlessExt.borderless_tools_is_minimized()) return;
+		buttons.reset();
+		delay1(buttons, 1, function(buttons:WindowFrameButtons) {
+			buttons.waitForMovement.enabled = true;
+			buttons.waitForMovement.x = Window.mouseX;
+			buttons.waitForMovement.y = Window.mouseY;
+			BorderlessExt.borderless_tools_syscommand(0xF020);
+		});
+	}
+	@:noDoc public function minimise() inline minimize();
+	/**
+	 * Returns whether the window is currently minimized.
+	 */
+	public function isMinimized() {
+		return BorderlessExt.borderless_tools_is_minimized();
+	}
+	@:noDoc public function isMinimised() return inline isMinimized();
+	
+	/**
+	 * Maximizes the window (much like pressing the button would)
+	 */
 	public function maximize() {
-		if (isMaximized || isFullscreen) return;
+		if (isMaximized || isFullscreen || Window.fullscreen) return;
 		isMaximized = true;
 		storeRect();
 		maximize_1();
 	}
-	function maximize_1() {
+	@:noDoc public function maximise() inline maximize();
+	
+	/**
+	 * Returns whether the window is currently maximized.
+	 */
+	#if sfgml_snake_case
+	@:native("is_maximized")
+	#else
+	@:native("isMaximized")
+	#end
+	public function getMaximized() return isMaximized;
+	#if sfgml_snake_case
+	@:native("is_maximised")
+	#else
+	@:native("isMaximised")
+	#end
+	@:noDoc public function getMaximised() return isMaximized;
+	
+	@:noDoc function maximize_1() {
 		var _work = getActiveMonitor().workspace;
 		if (debug) mylog("maximize: ", _work);
 		_work.setWindowRect();
 		BorderlessExt.borderless_tools_set_shadow(false);
 	}
-	function storeRect() {
+	@:noDoc function storeRect() {
 		restoreRect.getWindowRect();
 		if (debug) mylog("storeRect: ", restoreRect);
 	}
+	/**
+	 * Restores the window to non-maximized, non-full-screen state.
+	 */
 	public function restore(_force = false) {
 		if (Window.fullscreen) {
 			Window.fullscreen = false;
@@ -161,7 +266,22 @@ class WindowFrame {
 		_rect.setWindowRect();
 		BorderlessExt.borderless_tools_set_shadow(true);
 	}
-	public function setFullscreen(_mode:Int, _wasFullscreen = false) {
+	/**
+	 * Changes the fullscreen mode --{
+	 * -- `0` for returning to windowed mode
+	 * -- `1` for "exclusive" (DirectX) fullscreen
+	 * -- `2` for borderless fullscreen
+	 * }
+	 */
+	public function setFullscreen(mode:Int) {
+		setFullscreen_1(mode);
+	}
+	/** Returns the current fullscreen mode */
+	public function getFullscreen():Int {
+		if (Window.fullscreen) return 1;
+		return isFullscreen ? 2 : 0;
+	}
+	@:noDoc public function setFullscreen_1(_mode:Int, _wasFullscreen = false) {
 		if (debug) mylog("setFullscreen(mode:", _mode, ", wasfs:", _wasFullscreen, ")");
 		if (_mode == 1 || _mode == 2) {
 			buttons.reset();
@@ -172,14 +292,14 @@ class WindowFrame {
 				if (Window.fullscreen) return;
 				if (isFullscreen) {
 					restore();
-					delay1(this, 1, f -> f.setFullscreen(1));
+					delay1(this, 1, f -> f.setFullscreen_1(1));
 					return;
 				} else storeRect();
 				Window.fullscreen = true;
 			case 2: // fullscreen window
 				if (Window.fullscreen) {
 					Window.fullscreen = false;
-					delay1(this, 10, f -> f.setFullscreen(2, true));
+					delay1(this, 10, f -> f.setFullscreen_1(2, true));
 					return;
 				}
 				if (isFullscreen) return;
@@ -191,7 +311,7 @@ class WindowFrame {
 			default: // windowed
 				if (Window.fullscreen && isFullscreen) {
 					Window.fullscreen = false;
-					delay1(this, 1, f -> f.setFullscreen(0));
+					delay1(this, 1, f -> f.setFullscreen_1(0));
 					return;
 				}
 				if (Window.fullscreen) {
@@ -205,17 +325,36 @@ class WindowFrame {
 		}
 	}
 	
-	inline function setWindowCursor(cr:WindowCursor) {
-		if (Window.mouseCursor != cr) {
-			Window.mouseCursor = cr;
+	@:noDoc function setWindowCursor(cr:WindowCursor) {
+		currentCursor = cr;
+		if (setCursor) {
+			if (Window.mouseCursor != cr) {
+				Window.mouseCursor = cr;
+			}
 		}
 	}
 	
-	inline function getBorderWidth() return isMaximized ? 0 : borderWidth;
-	inline function getTitlebarHeight() return isMaximized ? titlebarHeightMaximized : titlebarHeight;
-	inline function getWidth() return Window.width;
-	inline function getHeight() return Window.height;
+	@:noDoc inline function getBorderWidth() return isMaximized ? 0 : borderWidth;
+	@:noDoc inline function getWidth() return Window.width;
+	@:noDoc inline function getHeight() return Window.height;
 	
+	/** This returns a non-zero value if a move/resize operation is underway */
+	public function getDragFlags() return drag.flags;
+	
+	/**
+	 * @dmdPrefix Drawing callbacks:
+	 * Is called to draw the outer window border.  
+	 * By default, this will draw [sprBorder].
+	 */
+	var drawBorder:(frame:WindowFrame, x:Int, y:Int, width:Int, height:Int)->Void = drawBorder_default;
+	@:noDoc static function drawBorder_default(frame:WindowFrame, _x:Int, _y:Int, _width:Int, _height:Int) {
+		draw9slice(frame.sprBorder, Window.hasFocus ? 1 : 0, _x, _y, _width, _height, frame.blend, frame.alpha, false);
+	}
+	
+	/**
+	 * @dmdPrefix Implementation:
+	 * Should be called once a frame in Step event
+	 */
 	function update() {
 		mouseOverFrame = false;
 		delayMgr.update();
@@ -227,8 +366,8 @@ class WindowFrame {
 		var gw = getWidth();
 		var gh = getHeight();
 		var _borderWidth = isMaximized ? 0 : borderWidth;
-		var _titleHeight = isMaximized ? titlebarHeightMaximized : titlebarHeight;
-		var _buttons_x = getButtonsX(gw);
+		var _titleHeight = caption.getHeight();
+		var _buttons_x = buttons.getX(gw);
 		
 		var _flags = 0x0, _titleHit = false;
 		var _hitSomething = true;
@@ -242,7 +381,7 @@ class WindowFrame {
 		)) { // mouse over window buttons
 			//
 		}
-		else if (!isMaximized && !Mathf.pointInRect(mx, my,
+		else if (!isMaximized && canResize && !Mathf.pointInRect(mx, my,
 			resizePadding,
 			resizePadding,
 			gw - resizePadding,
@@ -253,7 +392,7 @@ class WindowFrame {
 			if (mx >= gw - resizePadding) _flags |= WindowFrameDragFlags.Right;
 			if (my >= gh - resizePadding) _flags |= WindowFrameDragFlags.Bottom;
 		}
-		else if (Mathf.pointInRect(mx, my,0, 0, gw, titlebarHeight)) {
+		else if (Mathf.pointInRect(mx, my,0, 0, gw, _titleHeight)) {
 			_titleHit = true;
 		}
 		else {
@@ -300,53 +439,12 @@ class WindowFrame {
 			drag.update();
 		}
 	}
-	#if sfgml.modern
-	public static inline function draw9slice(spr:Sprite, subimg:Int, x:Int, y:Int, w:Int, h:Int, c:Color, a:Float) {
-		spr.drawStretchedExt(subimg, x, y, w, h, c, a);
-	}
-	#else
-	public static function draw9slice(spr:Sprite, subimg:Int, x:Int, y:Int, w:Int, h:Int, c:Color, a:Float) {
-		var sw = spr.width;
-		var sw1 = sw >> 1;
-		var sw2 = sw >> 2;
-		var sw3 = sw - sw2;
-		var sh = spr.height;
-		var sh1 = sh >> 1;
-		var sh2 = sh >> 2;
-		var sh3 = sh - sh2;
-		inline function part(pl:Int, pt:Int, pw:Int, ph:Int, x:Int, y:Int) {
-			spr.drawPartExt(subimg, pl, pt, pw, ph, x, y, 1, 1, c, a);
-		}
-		part(0, 0, sw2, sh2, x, y);
-		part(sw3, 0, sw2, sh2, x + w - sw2, y);
-		part(0, sh3, sw2, sh2, x, y + h - sh2);
-		part(sw3, sh3, sw2, sh2, x + w - sw2, y + h - sh2);
-		inline function stretch(pl:Int, pt:Int, pw:Int, ph:Int, x:Int, y:Int, w:Int, h:Int) {
-			spr.drawPartExt(subimg, pl, pt, pw, ph, x, y, w / pw, h / ph, c, a);
-		}
-		stretch(sw2, 0, sw1, sh2, x + sw2, y, w - sw1, sh2); // T
-		stretch(sw2, sh3, sw1, sh2, x + sw2, y + h - sh2, w - sw1, sh2); // B
-		stretch(0, sh2, sw2, sh1, x, y + sh2, sw2, h - sh1); // L
-		stretch(sw3, sh2, sw2, sh1, x + w - sw2, y + sh2, sw2, h - sh1); // R
-		
-		stretch(sw2, sh2, sw1, sh1, x + sw2, y + sh2, w - sw1, h - sh1);
-	}
-	#end
-	dynamic function drawBorder(_x, _y, _width, _height) {
-		draw9slice(sprBorder, 0, _x, _y, _width, _height, blend, alpha);
-	}
-	dynamic function drawCaptionRect(_x, _y, _width, _height, _buttons_x) {
-		draw9slice(sprCaption, Window.hasFocus ? 1 : 0, _x, _y, _width, _height, blend, alpha);
-	}
-	dynamic function drawCaptionText(_x, _y, _width, _height) {
-		var _h = GPU.halign;
-		var _v = GPU.valign;
-		GPU.halign = TextAlign.Left;
-		GPU.valign = TextAlign.Top;
-		Draw.textExt(_x + 4, _y + Syntax.div(_height, 2), "", -1, _width);
-		GPU.halign = _h;
-		GPU.valign = _v;
-	}
+	
+	/**
+	 * Should be called in **Draw GUI** event to draw the frame.  
+	 * If you don't rely on drawing logic, you may opt out of doing this when alpha is close to 0
+	 * or you otherwise know that you don't need the frame.
+	 */
 	public function draw() {
 		if (Window.fullscreen || isFullscreen) return;
 		
@@ -354,18 +452,18 @@ class WindowFrame {
 		var gh = getHeight();
 		untyped __display_set_gui_maximise_base(browser_width/gw, browser_height/gh, (gw%2)/-2, (gh%2)/-2);
 		var _borderWidth = getBorderWidth();
-		var _titlebarHeight = getTitlebarHeight();
-		var _buttons_x = getButtonsX(gw);
+		var _titlebarHeight = caption.getHeight();
+		var _buttons_x = buttons.getX(gw);
 		
-		if (!isMaximized) drawBorder(0, 0, gw, gh);
-		drawCaptionRect(_borderWidth, _borderWidth, gw-_borderWidth*2, _titlebarHeight, _buttons_x);
-		drawCaptionText(_borderWidth, _borderWidth, _buttons_x-_borderWidth, _titlebarHeight);
+		if (!isMaximized) drawBorder(this, 0, 0, gw, gh);
+		caption.drawBackground(this, _borderWidth, _borderWidth, gw-_borderWidth*2, _titlebarHeight, _buttons_x);
+		caption.drawText(this, _borderWidth, _borderWidth, _buttons_x-_borderWidth, _titlebarHeight);
 		buttons.draw(_buttons_x, _borderWidth, _titlebarHeight);
 		
 		untyped __display_gui_restore();
 	}
-	public function getDragFlags() return drag.flags;
-	static inline function main() {}
+	
+	@:noDoc static inline function main() {}
 }
 @:std @:native("") extern enum abstract WindowFrameDefaults(Sprite) from Sprite to Sprite {
 	var spr_window_border ;
